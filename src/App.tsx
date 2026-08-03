@@ -1,27 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
-import Lenis from 'lenis'
 import { Rocket } from 'lucide-react'
 
 function App() {
   const [count, setCount] = useState(0)
   const boxRef = useRef<HTMLDivElement>(null)
-
-  // Smooth scrolling via Lenis
-  useEffect(() => {
-    const lenis = new Lenis()
-
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-
-    return () => {
-      lenis.destroy()
-    }
-  }, [])
 
   // Simple GSAP animation on mount
   useEffect(() => {
@@ -47,7 +31,7 @@ function App() {
         <Rocket className="h-10 w-10 text-purple-500" />
         <h1 className="text-3xl font-medium tracking-tight">Trus</h1>
         <p className="text-neutral-500">
-          Vite + React + Tailwind + Framer Motion + GSAP + Lenis
+          Vite + React + Tailwind + Framer Motion + GSAP
         </p>
         <button
           onClick={() => setCount((c) => c + 1)}

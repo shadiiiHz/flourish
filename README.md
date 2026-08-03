@@ -1,6 +1,6 @@
 # trus
 
-A modern Vite + React 19 + TypeScript starter with Tailwind CSS v4, Framer Motion, GSAP, Lenis smooth scrolling, and Lucide icons.
+A modern Vite + React 19 + TypeScript starter with Tailwind CSS v4, Framer Motion, GSAP, and Lucide icons.
 
 ## Stack
 
@@ -10,7 +10,6 @@ A modern Vite + React 19 + TypeScript starter with Tailwind CSS v4, Framer Motio
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [Framer Motion](https://motion.dev/) — animations
 - [GSAP](https://gsap.com/) — animations
-- [Lenis](https://lenis.darkroom.engineering/) — smooth scrolling
 - [Lucide React](https://lucide.dev/) — icons
 
 ## Getting started
