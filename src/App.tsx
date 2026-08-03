@@ -29,7 +29,7 @@ function App() {
         className="flex flex-col items-center gap-4 rounded-2xl border border-neutral-200 p-10 shadow-sm dark:border-neutral-800"
       >
         <Rocket className="h-10 w-10 text-purple-500" />
-        <h1 className="text-3xl font-medium tracking-tight">Trus</h1>
+        <h1 className="text-3xl font-medium tracking-tight">Flourish</h1>
         <p className="text-neutral-500">
           Vite + React + Tailwind + Framer Motion + GSAP
         </p>

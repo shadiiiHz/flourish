@@ -1,4 +1,4 @@
-# trus
+# flourish
 
 A modern Vite + React 19 + TypeScript starter with Tailwind CSS v4, Framer Motion, GSAP, and Lucide icons.
 
