@@ -118,8 +118,8 @@ function Footer() {
             </h3>
 
             <ul className="flex flex-col gap-1 text-sm text-cocoa-600 sm:text-[15px]">
-              <li className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/60 text-sand-500 ring-1 ring-white/70">
+              <li className="flex items-center gap-1">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
                   <Phone className="h-4 w-4" strokeWidth={1.9} />
                 </span>
                 <a
@@ -130,8 +130,8 @@ function Footer() {
                 </a>
               </li>
 
-              <li className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/60 text-sand-500 ring-1 ring-white/70">
+              <li className="flex items-center gap-1">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
                   <Mail className="h-4 w-4" strokeWidth={1.9} />
                 </span>
                 <a
@@ -143,11 +143,11 @@ function Footer() {
                 </a>
               </li>
 
-              <li className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/60 text-sand-500 ring-1 ring-white/70">
+              <li className="flex items-center gap-1">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
                   <MapPin className="h-4 w-4" strokeWidth={1.9} />
                 </span>
-                <span className="max-w-64 leading-6 md:text-right">
+                <span className="max-w-80 leading-6 md:text-right">
                   {address}
                 </span>
               </li>
