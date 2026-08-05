@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ShoppingBasket } from "lucide-react";
-import logo from "../assets/logo-placeholder.png";
+import logo from "../assets/logo.png";
 
 function Header() {
   return (
@@ -12,11 +12,11 @@ function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border border-white/40 bg-white/40 px-3 py-2.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_10px_30px_-12px_rgba(138,84,39,0.25)] backdrop-blur-2xl backdrop-saturate-150 sm:px-5 sm:py-3">
         {/* Logo — right side in RTL */}
-        <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full ring-1 ring-sand-100 sm:h-14 sm:w-14">
+        <div className="shrink-0 flex items-center justify-center overflow-hidden rounded-full ring-1 ring-sand-100 sm:h-14 sm:w-14">
           <img
             src={logo}
             alt="لوگوی فلوریش"
-            className="h-full w-full object-cover"
+            className="h-10 w-10 object-cover"
           />
         </div>
 
