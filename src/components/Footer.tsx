@@ -35,7 +35,6 @@ function Footer() {
   return (
     <footer className="relative px-3 pb-6 pt-20 sm:px-6 sm:pb-10 sm:pt-28">
       <div className="relative mx-auto max-w-6xl">
-        {" "}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -114,7 +113,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 pt-5">
               <h3 className="font-display text-base font-bold text-cocoa-900 sm:text-lg">
                 راه‌های ارتباطی
               </h3>
