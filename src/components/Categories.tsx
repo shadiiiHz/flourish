@@ -108,7 +108,7 @@ function Categories() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/2)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-4 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/5)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="grid grid-flow-col auto-cols-[calc((100%_-_1.5rem)/3)] justify-center overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-4 sm:auto-cols-[calc((100%_-_4rem)/4)] sm:gap-4 lg:auto-cols-[calc((100%_-_7rem)/7)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {categories.map(({ id, title, image }) => (
               <motion.button
@@ -117,7 +117,7 @@ function Categories() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex snap-start flex-col items-center gap-4 rounded-[1.75rem] border border-sand-50 bg-white p-6 text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-5"
+                className="group flex snap-start flex-col items-center justify-center rounded-[1.75rem] border border-sand-50 bg-white text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-3"
               >
                 <img
                   src={image}
