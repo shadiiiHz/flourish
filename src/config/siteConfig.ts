@@ -116,6 +116,13 @@ export const siteConfig = {
       ],
     } satisfies Record<CategoryTabId, Category[]>,
   },
+  contact: {
+    phone: '09960080286',
+    whatsapp: '989960080286',
+    email: 'alimoghaddamfar@yahoo.com',
+    address: 'مازندران، نوشهر، بلوار کریمی، صد متر بعد از پاساژ لنگر',
+    instagram: '#',
+  },
   newItems: {
     items: [
       {

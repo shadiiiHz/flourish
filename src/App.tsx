@@ -3,6 +3,7 @@ import Categories from './components/Categories'
 import Hero from './components/Hero'
 import logo from './assets/logo.png'
 import NewItems from './components/NewItems'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Categories />
           <NewItems />
         </main>
+        <Footer />
       </div>
     </div>
   )
