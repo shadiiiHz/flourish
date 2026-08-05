@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
-import { ArrowLeft, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { siteConfig } from "../config/siteConfig";
 import placeholder from "../assets/placeholder.png";
 
@@ -169,13 +169,6 @@ function NewItems() {
           <h2 className="font-display text-xl font-bold text-cocoa-900 sm:text-2xl">
             آیتم‌های جدید
           </h2>
-          <button
-            type="button"
-            className="group flex items-center gap-1.5 text-sm font-semibold text-sand-400 transition-colors hover:text-sand-500"
-          >
-            نمایش همه
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          </button>
         </div>
 
         <div className="relative">
