@@ -75,7 +75,7 @@ function Categories() {
   return (
     <section className="relative px-3 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 flex justify-center sm:mb-14">
+        <div className="mb-10 flex justify-center sm:mb-10">
           <div className="relative flex items-center gap-1 rounded-full border border-white/40 bg-white/40 p-1.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_10px_30px_-12px_rgba(138,84,39,0.25)] backdrop-blur-2xl backdrop-saturate-150">
             {tabs.map(({ id, label }) => (
               <button
@@ -108,7 +108,7 @@ function Categories() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/2)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/5)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/2)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-4 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/5)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {categories.map(({ id, title, image }) => (
               <motion.button
@@ -117,15 +117,15 @@ function Categories() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex snap-start flex-col items-center gap-4 rounded-[1.75rem] border border-sand-100 bg-white p-6 text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-200 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-7"
+                className="group flex snap-start flex-col items-center gap-4 rounded-[1.75rem] border border-sand-50 bg-white p-6 text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-5"
               >
                 <img
                   src={image}
                   alt=""
-                  className="h-40 w-40 object-cover rounded-full bg-transparent"
+                  className="h-30 w-30 object-cover rounded-full bg-transparent"
                 />
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-[14px]">
                     {title}
                   </h3>
                 </div>

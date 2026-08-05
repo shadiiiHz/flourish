@@ -1,17 +1,4 @@
-import {
-  Cake,
-  ChefHat,
-  Coffee,
-  Croissant,
-  CupSoda,
-  Flower2,
-  GlassWater,
-  Leaf,
-  Milk,
-  Package,
-  Wheat,
-  type LucideIcon,
-} from 'lucide-react'
+
 import slide1 from '../assets/slider/slide1.png'
 import slide2 from '../assets/slider/slide2.png'
 import bakeryImg from '../assets/mainCat/bakery.png'
@@ -26,6 +13,7 @@ import icedDrinkImg from '../assets/mainCat/iced-drink.png'
 import machaImg from '../assets/mainCat/macha.png'
 import milkImg from '../assets/mainCat/milk.png'
 import teaImg from '../assets/mainCat/tea.png'
+import plusImg from '../assets/mainCat/plus.png'
 export interface HeroSlide {
   id: number
   title: string
@@ -44,7 +32,6 @@ export interface Category {
   id: string
   title: string
   image: string
-  icon: LucideIcon
 }
 
 export const siteConfig = {
@@ -71,48 +58,47 @@ export const siteConfig = {
     ] satisfies CategoryTab[],
     items: {
       bakery: [
-        { id: 'bakery', title: 'بیکری', image: bakeryImg, icon: ChefHat },
-        { id: 'pastry', title: 'پیستری', image: pastryImg, icon: Croissant },
-        { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, icon: Cake },
-        { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg, icon: Wheat },
-        { id: 'pantry', title: 'پینتری', image: paintryImg, icon: Package },
+        { id: 'bakery', title: 'بیکری', image: bakeryImg},
+        { id: 'pastry', title: 'پیستری', image: pastryImg },
+        { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg},
+        { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg },
+        { id: 'pantry', title: 'پینتری', image: paintryImg },
       ],
       drinks: [
         {
           id: 'hot-espresso',
           title: 'نوشیدنی گرم بر پایه اسپرسو',
           image: hotCoffeeImg,
-          icon: Coffee,
         },
         {
           id: 'cold-espresso',
           title: 'نوشیدنی سرد بر پایه اسپرسو',
           image: icedCoffeeImg,
-          icon: CupSoda,
         },
         {
           id: 'cold-drinks',
           title: 'نوشیدنی سرد',
           image: icedDrinkImg,
-          icon: GlassWater,
         },
         {
           id: 'matcha',
           title: 'ماچا',
           image: machaImg,
-          icon: Leaf,
         },
         {
           id: 'flavored-hot-milk',
           title: 'شیر داغ طعم‌دار',
           image: milkImg,
-          icon: Milk,
         },
         {
           id: 'tea-herbal',
           title: 'چای و دمنوش',
           image: teaImg,
-          icon: Flower2,
+        },
+          {
+          id: 'extra',
+          title: 'افزودنی ها',
+          image: plusImg,
         },
       ],
     } satisfies Record<CategoryTabId, Category[]>,
