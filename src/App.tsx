@@ -2,6 +2,7 @@ import Header from './components/Header'
 import Categories from './components/Categories'
 import Hero from './components/Hero'
 import logo from './assets/logo-placeholder.png'
+import NewItems from './components/NewItems'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <main>
           <Hero />
           <Categories />
+          <NewItems />
         </main>
       </div>
     </div>

@@ -14,6 +14,10 @@ import machaImg from '../assets/mainCat/macha.png'
 import milkImg from '../assets/mainCat/milk.png'
 import teaImg from '../assets/mainCat/tea.png'
 import plusImg from '../assets/mainCat/plus.png'
+
+import item1 from '../assets/items/1.jpeg'
+import item2 from '../assets/items/2.jpg'
+import item2_2 from '../assets/items/2-2.jpg'
 export interface HeroSlide {
   id: number
   title: string
@@ -32,6 +36,14 @@ export interface Category {
   id: string
   title: string
   image: string
+}
+
+export interface NewItem {
+  id: string
+  title: string
+  description: string
+  price: number
+  images: string[]
 }
 
 export const siteConfig = {
@@ -102,5 +114,51 @@ export const siteConfig = {
         },
       ],
     } satisfies Record<CategoryTabId, Category[]>,
+  },
+  newItems: {
+    items: [
+      {
+        id: 'butter-croissant',
+        title: 'کروسان کره‌ای',
+        description: 'کروسان تازه و لایه‌لایه با کره فرانسوی',
+        price: 85000,
+        images: [item1],
+      },
+      {
+        id: 'sourdough-bread',
+        title: 'نان خمیر ترش',
+        description: 'نان سنتی پخت‌شده با مایه ترش طبیعی',
+        price: 65000,
+        images: [item2 , item2_2],
+      },
+      {
+        id: 'vanilla-latte',
+        title: 'لاته وانیل',
+        description: 'اسپرسو با شیر بخاردیده و شربت وانیل',
+        price: 120000,
+        images: [],
+      },
+      {
+        id: 'matcha-latte',
+        title: 'ماچا لاته',
+        description: 'ماچا ژاپنی اصل با شیر بادام',
+        price: 135000,
+        images: [],
+      },
+      {
+        id: 'chocolate-cake',
+        title: 'کیک شکلاتی',
+        description: 'کیک لایه‌ای با گاناش شکلات تلخ',
+        price: 220000,
+        images: [],
+      },
+      {
+        id: 'peach-iced-tea',
+        title: 'آیس تی هلو',
+        description: 'دمنوش سرد و خنک با طعم هلو',
+        price: 95000,
+        images: [],
+      },
+    ] satisfies NewItem[],
   },
 }
