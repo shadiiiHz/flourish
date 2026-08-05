@@ -1,8 +1,7 @@
 import slide1 from '../assets/slider/slide1.png'
 import slide2 from '../assets/slider/slide2.png'
-
 export interface HeroSlide {
-  id: string
+  id: number
   title: string
   desc: string
   image: string
@@ -12,15 +11,15 @@ export const siteConfig = {
   hero: {
     slides: [
       {
-        id: 'sourdough-bread',
-        title: 'عطر نان تازه، شروعی گرم برای روز شما',
-        desc: 'نان‌های خمیرترش، پخته‌شده با خمیرمایه طبیعی و آرد درجه‌یک.',
+        id: 0,
+        title: '',
+        desc: '',
         image: slide1,
       },
       {
-        id: 'buttery-croissant',
-        title: 'کرواسان کره‌ای مخصوص',
-        desc: 'با پستوی خانگی، ژامبون بوقلمون دودی و پنیر گودا.',
+        id: 1,
+        title: '',
+        desc: '',
         image: slide2,
       },
     ] satisfies HeroSlide[],
