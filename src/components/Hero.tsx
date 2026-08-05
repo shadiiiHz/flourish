@@ -32,14 +32,14 @@ function Hero() {
   const slide = slides[index]
 
   return (
-    <section className="relative px-3 pt-8 sm:px-6 sm:pt-12">
+    <section className="relative px-3 pt-8 sm:px-6 sm:pt-10">
       <div
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.25rem] border border-sand-100 shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:rounded-[3rem]"
+        className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border border-sand-100 shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:rounded-[3rem]"
       >
         <motion.div
-          className="relative h-[300px] touch-pan-y sm:h-[420px] md:h-[600px]"
+          className="relative h-[300px] touch-pan-y sm:h-[420px] md:h-[460px]"
           onPanStart={() => setIsPaused(true)}
           onPanEnd={handlePanEnd}
         >
