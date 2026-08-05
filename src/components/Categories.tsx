@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { siteConfig, type CategoryTabId } from "../config/siteConfig";
 
 const { tabs, items: categoriesByTab } = siteConfig.categories;
@@ -23,6 +24,53 @@ const cardVariants = {
 function Categories() {
   const [activeTab, setActiveTab] = useState<CategoryTabId>("bakery");
   const categories = categoriesByTab[activeTab];
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [sliderState, setSliderState] = useState({
+    overflowing: false,
+    atStart: true,
+    atEnd: true,
+  });
+
+  const updateSliderState = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (maxScroll <= 4) {
+      setSliderState({ overflowing: false, atStart: true, atEnd: true });
+      return;
+    }
+    const pos = Math.abs(track.scrollLeft);
+    setSliderState({
+      overflowing: true,
+      atStart: pos <= 4,
+      atEnd: pos >= maxScroll - 4,
+    });
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollTo({ left: 0 });
+    updateSliderState();
+
+    const handleResize = () => updateSliderState();
+    track.addEventListener("scroll", updateSliderState, { passive: true });
+    window.addEventListener("resize", handleResize);
+    return () => {
+      track.removeEventListener("scroll", updateSliderState);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [activeTab]);
+
+  const scrollByCard = (direction: "prev" | "next") => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector("button");
+    const cardWidth = card?.getBoundingClientRect().width ?? track.clientWidth;
+    const gap = parseFloat(getComputedStyle(track).columnGap || "0") || 0;
+    const step = cardWidth + gap;
+    track.scrollBy({ left: direction === "next" ? -step : step, behavior: "smooth" });
+  };
 
   return (
     <section className="relative px-3 py-16 sm:px-6 sm:py-24">
@@ -53,35 +101,61 @@ function Categories() {
           </div>
         </div>
 
-        <motion.div
-          key={activeTab}
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1"
-        >
-          {categories.map(({ id, title, image }) => (
-            <motion.button
-              key={id}
-              variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="group flex flex-col items-center gap-4 rounded-[1.75rem] border border-sand-100 bg-white p-6 text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-200 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-7"
-            >
-              <img
-                src={image}
-                alt=""
-                className="h-40 w-40 object-cover rounded-full bg-transparent"
-              />
-              <div className="flex flex-col gap-1">
-                <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
-                  {title}
-                </h3>
-              </div>
-            </motion.button>
-          ))}
-        </motion.div>
+        <div className="relative">
+          <motion.div
+            key={activeTab}
+            ref={trackRef}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/2)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/5)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {categories.map(({ id, title, image }) => (
+              <motion.button
+                key={id}
+                variants={cardVariants}
+                whileHover={{ y: -8, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="group flex snap-start flex-col items-center gap-4 rounded-[1.75rem] border border-sand-100 bg-white p-6 text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-200 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-7"
+              >
+                <img
+                  src={image}
+                  alt=""
+                  className="h-40 w-40 object-cover rounded-full bg-transparent"
+                />
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
+                    {title}
+                  </h3>
+                </div>
+              </motion.button>
+            ))}
+          </motion.div>
+
+          {sliderState.overflowing && (
+            <>
+              <button
+                type="button"
+                aria-label="آیتم‌های قبلی"
+                onClick={() => scrollByCard("prev")}
+                disabled={sliderState.atStart}
+                className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 translate-x-1/3 items-center justify-center rounded-full border border-sand-100 bg-white text-cocoa-700 shadow-[0_16px_40px_-24px_rgba(138,84,39,0.5)] transition-opacity disabled:pointer-events-none disabled:opacity-0 sm:h-12 sm:w-12"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                aria-label="آیتم‌های بعدی"
+                onClick={() => scrollByCard("next")}
+                disabled={sliderState.atEnd}
+                className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-x-1/3 -translate-y-1/2 items-center justify-center rounded-full border border-sand-100 bg-white text-cocoa-700 shadow-[0_16px_40px_-24px_rgba(138,84,39,0.5)] transition-opacity disabled:pointer-events-none disabled:opacity-0 sm:h-12 sm:w-12"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </section>
   );
