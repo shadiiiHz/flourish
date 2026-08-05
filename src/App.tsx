@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import logo from './assets/logo.png'
 import NewItems from './components/NewItems'
 import Footer from './components/Footer'
+import GoToTop from './components/GoToTop'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      <GoToTop />
     </div>
   )
 }
