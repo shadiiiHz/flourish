@@ -117,15 +117,15 @@ function Categories() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex snap-start flex-col items-center justify-center rounded-[1.75rem] border border-sand-50 bg-white text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-3"
+                className="group flex snap-start flex-col items-center justify-center rounded-[1.75rem] border border-sand-50 bg-white text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] sm:p-2"
               >
                 <img
                   src={image}
                   alt=""
-                  className="h-30 w-30 object-cover rounded-full bg-transparent"
+                  className="h-25 w-25 object-cover rounded-full bg-transparent"
                 />
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-[14px]">
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-[12px]">
                     {title}
                   </h3>
                 </div>
