@@ -34,134 +34,137 @@ function WhatsappIcon(props: SVGProps<SVGSVGElement>) {
 function Footer() {
   return (
     <footer className="relative px-3 pb-6 pt-20 sm:px-6 sm:pb-10 sm:pt-28">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="pointer-events-none absolute z-50 left-40 top-20 h-20 w-20 select-none sm:h-40 sm:w-40"
-      >
-        <motion.img
-          src={croissant}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full select-none"
-          animate={{
-            y: [0, -6, 0],
-            rotate: [-16, -13, -16],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border border-white/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_-18px_90px_-40px_rgba(138,84,39,0.2),0_20px_50px_-30px_rgba(138,84,39,0.22)] backdrop-blur-2xl backdrop-saturate-150 sm:rounded-[3rem]"
-      >
-        <div className="relative grid gap-10 px-6 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-16 shrink-0 overflow-hidden bg-transparent sm:h-20 sm:w-20">
-                <img
-                  src={logo}
-                  alt="لوگوی فلوریش"
-                  className="h-full w-full object-contain"
-                />
+      <div className="relative mx-auto max-w-6xl">
+        {" "}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="pointer-events-none absolute z-50 -left-14 -top-10 h-20 w-20 select-none sm:h-40 sm:w-40"
+        >
+          <motion.img
+            src={croissant}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full select-none"
+            animate={{
+              y: [0, -6, 0],
+              rotate: [-16, -13, -16],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border border-white/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_-18px_90px_-40px_rgba(138,84,39,0.2),0_20px_50px_-30px_rgba(138,84,39,0.22)] backdrop-blur-2xl backdrop-saturate-150 sm:rounded-[3rem]"
+        >
+          <div className="relative grid gap-10 px-6 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-8">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <div className="h-16 w-16 shrink-0 overflow-hidden bg-transparent sm:h-20 sm:w-20">
+                  <img
+                    src={logo}
+                    alt="لوگوی فلوریش"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div>
+                  <h2 className="font-display text-xl font-bold text-cocoa-900 sm:text-2xl">
+                    فلوریش
+                  </h2>
+                  <p className="text-xs font-medium text-sand-500 sm:text-sm">
+                    بوتیک شیرینی و نانوایی
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="font-display text-xl font-bold text-cocoa-900 sm:text-2xl">
-                  فلوریش
-                </h2>
-                <p className="text-xs font-medium text-sand-500 sm:text-sm">
-                  بوتیک شیرینی و نانوایی
-                </p>
+
+              <p className="max-w-sm text-sm leading-7 text-cocoa-600 sm:text-[15px]">
+                فلوریش، بوتیک شیرینی و نانوایی مدرن است که با عشق به طعم‌های
+                اصیل و بهترین مواد اولیه، محصولاتی دست‌ساز و تازه می‌آفریند. ما
+                هر روز، لحظه‌های شیرین شما را با دقت و ظرافت می‌سازیم.
+              </p>
+
+              <div className="mt-1 flex items-center gap-3">
+                <a
+                  href={instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="اینستاگرام فلوریش"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 hover:bg-sand-500 active:scale-95"
+                >
+                  <InstagramIcon className="h-5 w-5" />
+                </a>
+                <a
+                  href={`https://wa.me/${whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="واتس‌اپ فلوریش"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 hover:bg-sand-500 active:scale-95"
+                >
+                  <WhatsappIcon className="h-5 w-5" />
+                </a>
               </div>
             </div>
 
-            <p className="max-w-sm text-sm leading-7 text-cocoa-600 sm:text-[15px]">
-              فلوریش، بوتیک شیرینی و نانوایی مدرن است که با عشق به طعم‌های اصیل
-              و بهترین مواد اولیه، محصولاتی دست‌ساز و تازه می‌آفریند. ما هر روز،
-              لحظه‌های شیرین شما را با دقت و ظرافت می‌سازیم.
+            <div className="flex flex-col gap-5">
+              <h3 className="font-display text-base font-bold text-cocoa-900 sm:text-lg">
+                راه‌های ارتباطی
+              </h3>
+
+              <ul className="flex flex-col gap-1 text-sm text-cocoa-600 sm:text-[15px]">
+                <li className="flex items-center gap-1">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
+                    <Phone className="h-4 w-4" strokeWidth={1.9} />
+                  </span>
+                  <a
+                    href={`tel:${phone}`}
+                    className="transition-colors hover:text-sand-500"
+                  >
+                    {toPersianDigits(phone)}
+                  </a>
+                </li>
+
+                <li className="flex items-center gap-1">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
+                    <Mail className="h-4 w-4" strokeWidth={1.9} />
+                  </span>
+                  <a
+                    href={`mailto:${email}`}
+                    dir="ltr"
+                    className="transition-colors hover:text-sand-500"
+                  >
+                    {email}
+                  </a>
+                </li>
+
+                <li className="flex items-center gap-1">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
+                    <MapPin className="h-4 w-4" strokeWidth={1.9} />
+                  </span>
+                  <span className="max-w-80 leading-6 md:text-right">
+                    {address}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/50 px-6 py-5 sm:px-10">
+            <p className="text-center text-xs text-cocoa-500 sm:text-sm">
+              تمامی حقوق مادی و معنوی، متعلق به بوتیک شیرینی فلوریش است. ©{" "}
+              {currentPersianYear}
             </p>
-
-            <div className="mt-1 flex items-center gap-3">
-              <a
-                href={instagram}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="اینستاگرام فلوریش"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 hover:bg-sand-500 active:scale-95"
-              >
-                <InstagramIcon className="h-5 w-5" />
-              </a>
-              <a
-                href={`https://wa.me/${whatsapp}`}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="واتس‌اپ فلوریش"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 hover:bg-sand-500 active:scale-95"
-              >
-                <WhatsappIcon className="h-5 w-5" />
-              </a>
-            </div>
           </div>
-
-          <div className="flex flex-col gap-5">
-            <h3 className="font-display text-base font-bold text-cocoa-900 sm:text-lg">
-              راه‌های ارتباطی
-            </h3>
-
-            <ul className="flex flex-col gap-1 text-sm text-cocoa-600 sm:text-[15px]">
-              <li className="flex items-center gap-1">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
-                  <Phone className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <a
-                  href={`tel:${phone}`}
-                  className="transition-colors hover:text-sand-500"
-                >
-                  {toPersianDigits(phone)}
-                </a>
-              </li>
-
-              <li className="flex items-center gap-1">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
-                  <Mail className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <a
-                  href={`mailto:${email}`}
-                  dir="ltr"
-                  className="transition-colors hover:text-sand-500"
-                >
-                  {email}
-                </a>
-              </li>
-
-              <li className="flex items-center gap-1">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center text-sand-500">
-                  <MapPin className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <span className="max-w-80 leading-6 md:text-right">
-                  {address}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-white/50 px-6 py-5 sm:px-10">
-          <p className="text-center text-xs text-cocoa-500 sm:text-sm">
-            تمامی حقوق مادی و معنوی، متعلق به بوتیک شیرینی فلوریش است. ©{" "}
-            {currentPersianYear}
-          </p>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </footer>
   );
 }
