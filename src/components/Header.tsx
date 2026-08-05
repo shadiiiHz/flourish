@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ShoppingBasket } from "lucide-react";
+import basket from "../assets/basketShopping.svg";
 import logo from "../assets/logo.png";
 
 function Header() {
@@ -36,7 +36,11 @@ function Header() {
             aria-label="سبد خرید"
             className="relative flex h-10 w-10 shrink-0 items-center justify-center text-cocoa-900 sm:h-11 sm:w-11"
           >
-            <ShoppingBasket className="h-6 w-6" strokeWidth={1.9} />
+            <img
+              src={basket}
+              alt=""
+              className="h-25 w-25 object-cover rounded-full bg-transparent"
+            />
             <span className="absolute -top-0.5 -end-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-sand-500 px-1 text-[10px] font-bold text-white ring-2 ring-white">
               2
             </span>
