@@ -14,6 +14,18 @@ import {
 } from 'lucide-react'
 import slide1 from '../assets/slider/slide1.png'
 import slide2 from '../assets/slider/slide2.png'
+import bakeryImg from '../assets/mainCat/bakery.png'
+import pastryImg from '../assets/mainCat/pastry.png'
+import orderImg from '../assets/mainCat/order.png'
+import breadImg from '../assets/mainCat/bread.png'
+import paintryImg from '../assets/mainCat/paintry.png'
+
+import hotCoffeeImg from '../assets/mainCat/hot-coffee.png'
+import icedCoffeeImg from '../assets/mainCat/iced-coffee.png'
+import icedDrinkImg from '../assets/mainCat/iced-drink.png'
+import machaImg from '../assets/mainCat/macha.png'
+import milkImg from '../assets/mainCat/milk.png'
+import teaImg from '../assets/mainCat/tea.png'
 export interface HeroSlide {
   id: number
   title: string
@@ -59,47 +71,47 @@ export const siteConfig = {
     ] satisfies CategoryTab[],
     items: {
       bakery: [
-        { id: 'bakery', title: 'بیکری', image: '/src/assets/mainCat/bakery.png', icon: ChefHat },
-        { id: 'pastry', title: 'پیستری', image: '/src/assets/mainCat/pastry.png', icon: Croissant },
-        { id: 'custom', title: 'آیتم‌های سفارشی', image: '/src/assets/mainCat/order.png', icon: Cake },
-        { id: 'sourdough', title: 'نان خمیر ترش', image: '/src/assets/mainCat/bread.png', icon: Wheat },
-        { id: 'pantry', title: 'پینتری', image: '/src/assets/mainCat/paintry.png', icon: Package },
+        { id: 'bakery', title: 'بیکری', image: bakeryImg, icon: ChefHat },
+        { id: 'pastry', title: 'پیستری', image: pastryImg, icon: Croissant },
+        { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, icon: Cake },
+        { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg, icon: Wheat },
+        { id: 'pantry', title: 'پینتری', image: paintryImg, icon: Package },
       ],
       drinks: [
         {
           id: 'hot-espresso',
           title: 'نوشیدنی گرم بر پایه اسپرسو',
-          image: '/src/assets/mainCat/hot-coffee.png',
+          image: hotCoffeeImg,
           icon: Coffee,
         },
         {
           id: 'cold-espresso',
           title: 'نوشیدنی سرد بر پایه اسپرسو',
-          image: '/src/assets/mainCat/iced-coffee.png',
+          image: icedCoffeeImg,
           icon: CupSoda,
         },
         {
           id: 'cold-drinks',
           title: 'نوشیدنی سرد',
-          image: '/src/assets/mainCat/iced-drink.png',
+          image: icedDrinkImg,
           icon: GlassWater,
         },
         {
           id: 'matcha',
           title: 'ماچا',
-          image: '/src/assets/mainCat/macha.png',
+          image: machaImg,
           icon: Leaf,
         },
         {
           id: 'flavored-hot-milk',
           title: 'شیر داغ طعم‌دار',
-          image: '/src/assets/mainCat/milk.png',
+          image: milkImg,
           icon: Milk,
         },
         {
           id: 'tea-herbal',
           title: 'چای و دمنوش',
-          image: '/src/assets/mainCat/tea.png',
+          image: teaImg,
           icon: Flower2,
         },
       ],
