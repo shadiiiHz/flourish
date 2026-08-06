@@ -1,0 +1,202 @@
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { siteConfig, type CategoryTabId } from "../config/siteConfig";
+import ProductCard from "../components/ProductCard";
+
+const { tabs, items: categoriesByTab } = siteConfig.categories;
+
+const flatCategories = tabs.flatMap((tab) =>
+  categoriesByTab[tab.id].map((category) => ({ id: category.id, groupId: tab.id })),
+);
+
+function CategoryMenuPage() {
+  const [activeGroup, setActiveGroup] = useState<CategoryTabId>(flatCategories[0].groupId);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>(flatCategories[0].id);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const navRef = useRef<HTMLDivElement>(null);
+  const chipTrackRef = useRef<HTMLDivElement>(null);
+  const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
+  const location = useLocation();
+
+  useEffect(() => {
+    const headerEl = document.getElementById("site-header");
+    if (!headerEl) return;
+    const update = () => setHeaderHeight(headerEl.offsetHeight);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(headerEl);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navHeight = navRef.current?.offsetHeight ?? 0;
+      const offset = headerHeight + navHeight + 24;
+      let current = flatCategories[0];
+      for (const cat of flatCategories) {
+        const el = categoryRefs.current[cat.id];
+        if (el && el.getBoundingClientRect().top - offset <= 0) {
+          current = cat;
+        }
+      }
+      setActiveGroup(current.groupId);
+      setActiveCategoryId(current.id);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [headerHeight]);
+
+  useEffect(() => {
+    const container = chipTrackRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLElement>(
+      `[data-category-id="${activeCategoryId}"]`,
+    );
+    activeBtn?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeCategoryId]);
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    const timer = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const headerEl = document.getElementById("site-header");
+      const navHeight = navRef.current?.offsetHeight ?? 0;
+      const offset = (headerEl?.offsetHeight ?? 0) + navHeight + 16;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 60);
+    return () => window.clearTimeout(timer);
+  }, [location.hash]);
+
+  const goToCategory = (id: string) => {
+    const el = categoryRefs.current[id];
+    if (!el) return;
+    const navHeight = navRef.current?.offsetHeight ?? 0;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight - navHeight - 16;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
+  const goToGroup = (id: CategoryTabId) => {
+    const firstCategoryId = categoriesByTab[id][0].id;
+    setActiveGroup(id);
+    setActiveCategoryId(firstCategoryId);
+    goToCategory(firstCategoryId);
+  };
+
+  const handleCategoryClick = (id: string, groupId: CategoryTabId) => {
+    setActiveGroup(groupId);
+    setActiveCategoryId(id);
+    goToCategory(id);
+  };
+
+  return (
+    <div className="relative">
+      <div className="mx-auto max-w-6xl px-3 pb-2 pt-6 sm:px-6">
+        <h1 className="font-display text-2xl font-bold text-cocoa-900 sm:text-3xl">منو</h1>
+      </div>
+
+      <div
+        ref={navRef}
+        style={{ top: headerHeight }}
+        className="sticky z-40 border-b border-sand-50/60 bg-cream/80 backdrop-blur-xl"
+      >
+        <div className="px-3 py-3 sm:px-6">
+          <div className="mx-auto flex max-w-6xl justify-center">
+            <div className="relative flex items-center gap-1 rounded-full border border-white/40 bg-white/40 p-1.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_10px_30px_-12px_rgba(138,84,39,0.25)] backdrop-blur-2xl backdrop-saturate-150">
+              {tabs.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => goToGroup(id)}
+                  className="relative rounded-full px-5 py-2.5 text-xs font-bold transition-colors sm:px-8 sm:text-sm"
+                >
+                  {activeGroup === id && (
+                    <motion.span
+                      layoutId="menu-group-tab-highlight"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      className="absolute inset-0 rounded-full bg-white/70 shadow-[0_8px_20px_-8px_rgba(138,84,39,0.45)]"
+                    />
+                  )}
+                  <span
+                    className={`relative z-10 ${activeGroup === id ? "text-cocoa-900" : "text-cocoa-500"}`}
+                  >
+                    {label}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-sand-50/60 px-3 py-2 sm:px-6">
+          <div
+            ref={chipTrackRef}
+            className="mx-auto flex max-w-6xl gap-2 overflow-x-auto scroll-smooth px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {categoriesByTab[activeGroup].map((category) => (
+              <button
+                key={category.id}
+                type="button"
+                data-category-id={category.id}
+                onClick={() => handleCategoryClick(category.id, activeGroup)}
+                className={`shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors sm:text-[13px] ${
+                  activeCategoryId === category.id
+                    ? "border-sand-400 bg-sand-400 text-white"
+                    : "border-sand-100 bg-white text-cocoa-600 hover:border-sand-200"
+                }`}
+              >
+                {category.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-3 pb-16 sm:px-6">
+        {tabs.map(({ id: tabId, label }) => (
+          <section key={tabId} className="pt-10">
+            <h2 className="mb-6 font-display text-xl font-bold text-cocoa-900 sm:text-2xl">
+              {label}
+            </h2>
+
+            <div className="flex flex-col gap-10">
+              {categoriesByTab[tabId].map((category) => (
+                <div
+                  key={category.id}
+                  id={category.id}
+                  ref={(el) => {
+                    categoryRefs.current[category.id] = el;
+                  }}
+                  className="scroll-mt-52 sm:scroll-mt-60"
+                >
+                  <div className="mb-4 flex items-center gap-3">
+                    <img
+                      src={category.image}
+                      alt=""
+                      className="h-10 w-10 rounded-full bg-transparent object-cover"
+                    />
+                    <h3 className="font-display text-lg font-bold text-cocoa-900">
+                      {category.title}
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                    {category.items.map((item) => (
+                      <ProductCard key={item.id} item={item} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default CategoryMenuPage;

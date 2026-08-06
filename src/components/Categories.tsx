@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { siteConfig, type CategoryTabId } from "../config/siteConfig";
 
@@ -22,6 +23,7 @@ const cardVariants = {
 };
 
 function Categories() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<CategoryTabId>("bakery");
   const categories = categoriesByTab[activeTab];
   const trackRef = useRef<HTMLDivElement>(null);
@@ -113,6 +115,8 @@ function Categories() {
             {categories.map(({ id, title, image }) => (
               <motion.button
                 key={id}
+                type="button"
+                onClick={() => navigate(`/menu#${id}`)}
                 variants={cardVariants}
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

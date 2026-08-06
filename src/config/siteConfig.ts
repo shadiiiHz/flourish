@@ -33,10 +33,19 @@ export interface CategoryTab {
   label: string
 }
 
+export interface MenuItem {
+  id: string
+  title: string
+  description: string
+  price: number
+  images: string[]
+}
+
 export interface Category {
   id: string
   title: string
   image: string
+  items: MenuItem[]
 }
 
 export interface NewItem {
@@ -45,6 +54,24 @@ export interface NewItem {
   description: string
   price: number
   images: string[]
+}
+
+const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
+const toPersianDigits = (value: number) =>
+  String(value).replace(/\d/g, (digit) => persianDigits[Number(digit)])
+
+function createPlaceholderItems(
+  categoryId: string,
+  categoryTitle: string,
+  count = 4,
+): MenuItem[] {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `${categoryId}-${index + 1}`,
+    title: `${categoryTitle} ${toPersianDigits(index + 1)}`,
+    description: 'توضیحات این محصول به‌زودی تکمیل می‌شود',
+    price: 0,
+    images: [],
+  }))
 }
 
 export const siteConfig = {
@@ -71,47 +98,54 @@ export const siteConfig = {
     ] satisfies CategoryTab[],
     items: {
       bakery: [
-        { id: 'bakery', title: 'بیکری', image: bakeryImg},
-        { id: 'pastry', title: 'پیستری', image: pastryImg },
-        { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg},
-        { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg },
-        { id: 'pantry', title: 'پینتری', image: paintryImg },
+        { id: 'bakery', title: 'بیکری', image: bakeryImg, items: createPlaceholderItems('bakery', 'بیکری') },
+        { id: 'pastry', title: 'پیستری', image: pastryImg, items: createPlaceholderItems('pastry', 'پیستری') },
+        { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, items: createPlaceholderItems('custom', 'آیتم سفارشی') },
+        { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg, items: createPlaceholderItems('sourdough', 'نان خمیر ترش') },
+        { id: 'pantry', title: 'پینتری', image: paintryImg, items: createPlaceholderItems('pantry', 'پینتری') },
       ],
       drinks: [
         {
           id: 'hot-espresso',
           title: 'نوشیدنی گرم بر پایه اسپرسو',
           image: hotCoffeeImg,
+          items: createPlaceholderItems('hot-espresso', 'نوشیدنی گرم اسپرسو'),
         },
         {
           id: 'cold-espresso',
           title: 'نوشیدنی سرد بر پایه اسپرسو',
           image: icedCoffeeImg,
+          items: createPlaceholderItems('cold-espresso', 'نوشیدنی سرد اسپرسو'),
         },
         {
           id: 'cold-drinks',
           title: 'نوشیدنی سرد',
           image: icedDrinkImg,
+          items: createPlaceholderItems('cold-drinks', 'نوشیدنی سرد'),
         },
         {
           id: 'matcha',
           title: 'ماچا',
           image: machaImg,
+          items: createPlaceholderItems('matcha', 'ماچا'),
         },
         {
           id: 'flavored-hot-milk',
           title: 'شیر داغ طعم‌دار',
           image: milkImg,
+          items: createPlaceholderItems('flavored-hot-milk', 'شیر داغ طعم‌دار'),
         },
         {
           id: 'tea-herbal',
           title: 'چای و دمنوش',
           image: teaImg,
+          items: createPlaceholderItems('tea-herbal', 'چای و دمنوش'),
         },
           {
           id: 'extra',
           title: 'افزودنی ها',
           image: plusImg,
+          items: createPlaceholderItems('extra', 'افزودنی'),
         },
       ],
     } satisfies Record<CategoryTabId, Category[]>,
