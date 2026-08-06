@@ -46,6 +46,7 @@ export interface Category {
   id: string
   title: string
   image: string
+  note?: string
   items: MenuItem[]
 }
 
@@ -101,11 +102,17 @@ export const siteConfig = {
       bakery: [
         { id: 'bakery', title: 'بیکری', image: bakeryImg, items: createPlaceholderItems('bakery', 'بیکری') },
         { id: 'pastry', title: 'پیستری', image: pastryImg, items: createPlaceholderItems('pastry', 'پیستری') },
-        { id: 'cake', title: 'کیک', image: cakeImg, items: createPlaceholderItems('cake', 'کیک') },
+        {
+          id: 'cake',
+          title: 'کیک',
+          image: cakeImg,
+          note: 'تمام شیرینی های فرانسوی از 48 ساعت قبل به صورت کیک در سایزهای مختلف قابل سفارش هستند',
+          items: createPlaceholderItems('cake', 'کیک'),
+        },
         { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, items: createPlaceholderItems('custom', 'آیتم سفارشی') },
         { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg, items: createPlaceholderItems('sourdough', 'نان خمیر ترش') },
         { id: 'pantry', title: 'پینتری', image: paintryImg, items: createPlaceholderItems('pantry', 'پینتری') },
-      ],
+      ] as Category[],
       drinks: [
         {
           id: 'hot-espresso',
@@ -149,7 +156,7 @@ export const siteConfig = {
           image: plusImg,
           items: createPlaceholderItems('extra', 'افزودنی'),
         },
-      ],
+      ] as Category[],
     } satisfies Record<CategoryTabId, Category[]>,
   },
   contact: {

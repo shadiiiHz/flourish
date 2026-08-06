@@ -179,9 +179,14 @@ function CategoryMenuPage() {
                       alt=""
                       className="h-10 w-10 rounded-full bg-transparent object-cover"
                     />
-                    <h3 className="font-display text-lg font-bold text-cocoa-900">
-                      {category.title}
-                    </h3>
+                    <div>
+                      <h3 className="font-display text-lg font-bold text-cocoa-900">
+                        {category.title}
+                      </h3>
+                      {category.note && (
+                        <p className="mt-1 text-xs text-cocoa-500 sm:text-sm">{category.note}</p>
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
