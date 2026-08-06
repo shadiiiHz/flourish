@@ -7,6 +7,7 @@ import pastryImg from '../assets/mainCat/pastry.svg'
 import orderImg from '../assets/mainCat/order.svg'
 import breadImg from '../assets/mainCat/bread.svg'
 import paintryImg from '../assets/mainCat/paintry.svg'
+import cakeImg from '../assets/mainCat/cake.svg'
 
 import hotCoffeeImg from '../assets/mainCat/hot-coffee.svg'
 import icedCoffeeImg from '../assets/mainCat/iced-coffee.svg'
@@ -100,6 +101,7 @@ export const siteConfig = {
       bakery: [
         { id: 'bakery', title: 'بیکری', image: bakeryImg, items: createPlaceholderItems('bakery', 'بیکری') },
         { id: 'pastry', title: 'پیستری', image: pastryImg, items: createPlaceholderItems('pastry', 'پیستری') },
+        { id: 'cake', title: 'کیک', image: cakeImg, items: createPlaceholderItems('cake', 'کیک') },
         { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, items: createPlaceholderItems('custom', 'آیتم سفارشی') },
         { id: 'sourdough', title: 'نان خمیر ترش', image: breadImg, items: createPlaceholderItems('sourdough', 'نان خمیر ترش') },
         { id: 'pantry', title: 'پینتری', image: paintryImg, items: createPlaceholderItems('pantry', 'پینتری') },
