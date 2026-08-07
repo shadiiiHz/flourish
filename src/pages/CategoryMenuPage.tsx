@@ -105,7 +105,7 @@ function CategoryMenuPage() {
   return (
     <div className="relative">
       <section className="relative px-3 pt-8 sm:px-6 sm:pt-10">
-        <div className="relative mx-auto h-[300px] max-w-6xl overflow-hidden rounded-[2.25rem] border border-sand-100 shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:h-[420px] sm:rounded-[3rem] md:h-[460px]">
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border border-sand-100 shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:h-[420px] sm:rounded-[3rem]">
           <img
             src={menuBanner}
             alt="بوتیک نان و شیرینی فلوریش"
