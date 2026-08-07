@@ -68,7 +68,7 @@ function NewItems() {
         <div className="relative">
           <div
             ref={trackRef}
-            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/1.1667)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-1 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/4)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="grid grid-flow-col auto-cols-[calc((100%_-_1rem)/1.08)] gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-1 sm:auto-cols-[calc((100%_-_2.5rem)/3)] sm:gap-5 lg:auto-cols-[calc((100%_-_5rem)/4)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {items.map((item) => (
               <ProductCard key={item.id} item={item} />
