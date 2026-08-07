@@ -17,7 +17,8 @@ import milkImg from '../assets/mainCat/milk.svg'
 import teaImg from '../assets/mainCat/tea.svg'
 import plusImg from '../assets/mainCat/plus.svg'
 
-import item1 from '../assets/items/1.jpeg'
+import item1 from '../assets/items/1.jpg'
+import item1_1 from '../assets/items/1-1.jpeg'
 import item2 from '../assets/items/2.jpg'
 import item2_2 from '../assets/items/2-2.jpg'
 export interface HeroSlide {
@@ -34,6 +35,15 @@ export interface CategoryTab {
   label: string
 }
 
+export interface MenuItemVariant {
+  id: string
+  title: string
+  price: number
+  weight?: string
+  stock?: number
+  image?: string
+}
+
 export interface MenuItem {
   id: string
   title: string
@@ -45,6 +55,8 @@ export interface MenuItem {
   ingredients?: string
   servingSize?: string
   discountPercent?: number
+  stock?: number
+  variants?: MenuItemVariant[]
 }
 
 export interface Category {
@@ -190,6 +202,10 @@ export const siteConfig = {
         weight: '۹۰ گرم',
         ingredients: 'آرد گندم، کره فرانسوی، شکر، مخمر، نمک',
         servingSize: '۱ نفر',
+        variants: [
+          { id: 'regular', title: 'کروسان', price: 85000, weight: '۹۰ گرم', stock: 12 , image: item1 },
+          { id: 'mini', title: 'مینی کروسان', price: 45000, weight: '۴۵ گرم', stock: 20 , image: item1_1},
+        ],
       },
       {
         id: 'sourdough-bread',

@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 import ProductImageSlider from "./ProductImageSlider";
+import CartVariantModal from "./CartVariantModal";
+import { useCart } from "../context/CartContext";
 import { getDiscountedPrice, type MenuItem } from "../config/siteConfig";
 
 function ProductModal({
@@ -14,10 +16,22 @@ function ProductModal({
   categoryTitle?: string;
   onClose: () => void;
 }) {
+  const [variantModalOpen, setVariantModalOpen] = useState(false);
+  const { addToCart, notify } = useCart();
   const hasDiscount = !!item.discountPercent && item.price > 0;
   const finalPrice = hasDiscount
     ? getDiscountedPrice(item.price, item.discountPercent)
     : item.price;
+  const hasVariants = !!item.variants && item.variants.length > 0;
+
+  const handleAddClick = () => {
+    if (hasVariants) {
+      setVariantModalOpen(true);
+      return;
+    }
+    addToCart(item);
+    notify(`${item.title} به سبد اضافه شد`);
+  };
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -134,6 +148,7 @@ function ProductModal({
             <button
               type="button"
               aria-label={`افزودن ${item.title}`}
+              onClick={handleAddClick}
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95"
             >
               <Plus className="h-5 w-5" />
@@ -141,6 +156,16 @@ function ProductModal({
           </div>
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {variantModalOpen && (
+          <CartVariantModal
+            item={item}
+            categoryTitle={categoryTitle}
+            onClose={() => setVariantModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>,
     document.body,
   );
