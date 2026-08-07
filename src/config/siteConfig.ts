@@ -217,6 +217,7 @@ export const siteConfig = {
         weight: '۵۰۰ گرم',
         ingredients: 'آرد سبوس‌دار، آب، مایه ترش طبیعی، نمک',
         servingSize: '۳ تا ۴ نفر',
+        stock: 8,
       },
       {
         id: 'vanilla-latte',
@@ -228,6 +229,7 @@ export const siteConfig = {
         weight: '۳۶۰ میلی‌لیتر',
         ingredients: 'اسپرسو، شیر، شربت وانیل',
         servingSize: '۱ نفر',
+        // بدون stock یعنی این نوشیدنی سفارشی است و محدودیت موجودی ندارد
       },
       {
         id: 'matcha-latte',
@@ -239,6 +241,7 @@ export const siteConfig = {
         weight: '۳۶۰ میلی‌لیتر',
         ingredients: 'پودر ماچا درجه‌یک، شیر بادام، شربت وانیل',
         servingSize: '۱ نفر',
+        // بدون stock یعنی این نوشیدنی سفارشی است و محدودیت موجودی ندارد
       },
       {
         id: 'chocolate-cake',
@@ -251,6 +254,7 @@ export const siteConfig = {
         weight: '۱۲۰۰ گرم',
         ingredients: 'شکلات تلخ، آرد، تخم‌مرغ، کره، خامه',
         servingSize: '۶ تا ۸ نفر',
+        stock: 5,
       },
       {
         id: 'peach-iced-tea',
@@ -262,6 +266,7 @@ export const siteConfig = {
         weight: '۴۵۰ میلی‌لیتر',
         ingredients: 'چای سیاه، شربت هلو، یخ، لیمو',
         servingSize: '۱ نفر',
+        // بدون stock یعنی این نوشیدنی سفارشی است و محدودیت موجودی ندارد
       },
     ] satisfies NewItem[],
   },

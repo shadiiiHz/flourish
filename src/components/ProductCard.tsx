@@ -16,12 +16,15 @@ function ProductCard({
 }) {
   const [open, setOpen] = useState(false);
   const [variantModalOpen, setVariantModalOpen] = useState(false);
-  const { addToCart, notify } = useCart();
+  const { addToCart, notify, getQuantity } = useCart();
   const hasDiscount = !!item.discountPercent && item.price > 0;
   const finalPrice = hasDiscount
     ? getDiscountedPrice(item.price, item.discountPercent)
     : item.price;
   const hasVariants = !!item.variants && item.variants.length > 0;
+  const cartQuantity = getQuantity(item.id);
+  const outOfStock = !hasVariants && item.stock === 0;
+  const atMax = !hasVariants && item.stock !== undefined && cartQuantity >= item.stock;
 
   const handleAddClick = () => {
     if (hasVariants) {
@@ -87,7 +90,8 @@ function ProductCard({
               type="button"
               aria-label={`افزودن ${item.title}`}
               onClick={handleAddClick}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 sm:h-9 sm:w-9"
+              disabled={outOfStock || atMax}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:w-9"
             >
               <Plus className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
             </button>

@@ -15,10 +15,20 @@ function CartVariantModal({
   categoryTitle?: string;
   onClose: () => void;
 }) {
-  const { getQuantity, addToCart, setQuantity, lineKeyFor, totalCount, totalPrice, openCart } =
-    useCart();
+  const { getQuantity, addToCart, setQuantity, lineKeyFor, totalCount, openCart } = useCart();
   const variants = item.variants ?? [];
   const hasDiscount = !!item.discountPercent;
+
+  const productCount = variants.reduce(
+    (sum, variant) => sum + getQuantity(item.id, variant.id),
+    0,
+  );
+  const productPrice = variants.reduce((sum, variant) => {
+    const variantPrice = hasDiscount
+      ? getDiscountedPrice(variant.price, item.discountPercent)
+      : variant.price;
+    return sum + getQuantity(item.id, variant.id) * variantPrice;
+  }, 0);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -93,8 +103,6 @@ function CartVariantModal({
               : variant.price;
             const outOfStock = variant.stock === 0;
             const atMax = variant.stock !== undefined && quantity >= variant.stock;
-            const lowStock =
-              variant.stock !== undefined && variant.stock > 0 && variant.stock <= 5;
 
             return (
               <div
@@ -131,22 +139,9 @@ function CartVariantModal({
                       {finalPrice.toLocaleString("fa-IR")} تومان
                     </span>
                   </p>
-                  {outOfStock ? (
-                    <p className="mt-0.5 text-[11px] font-semibold text-red-500">ناموجود</p>
-                  ) : (
-                    lowStock && (
-                      <p className="mt-0.5 text-[11px] font-semibold text-sand-500">
-                        تنها {variant.stock!.toLocaleString("fa-IR")} عدد باقی مانده
-                      </p>
-                    )
-                  )}
                 </div>
 
-                {outOfStock ? (
-                  <span className="shrink-0 rounded-full bg-sand-50 px-3 py-1.5 text-[11px] font-semibold text-cocoa-500">
-                    ناموجود
-                  </span>
-                ) : quantity > 0 ? (
+                {quantity > 0 ? (
                   <div className="flex shrink-0 items-center gap-2 rounded-full border border-sand-100 bg-sand-50 p-1">
                     <button
                       type="button"
@@ -172,8 +167,9 @@ function CartVariantModal({
                 ) : (
                   <button
                     type="button"
+                    disabled={outOfStock}
                     onClick={() => addToCart(item, variant, 1)}
-                    className="flex shrink-0 items-center gap-1 rounded-full bg-sand-400 px-3.5 py-2 text-xs font-bold text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 sm:text-sm"
+                    className="flex shrink-0 items-center gap-1 rounded-full bg-sand-400 px-3.5 py-2 text-xs font-bold text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40 sm:text-sm"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     افزودن
@@ -186,11 +182,11 @@ function CartVariantModal({
 
         <div className="flex flex-col gap-3 border-t border-sand-50 p-5 sm:p-6">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-cocoa-600">جمع سبد خرید</span>
+            <span className="text-cocoa-600">جمع این محصول</span>
             <span className="font-bold text-cocoa-900">
-              {totalPrice.toLocaleString("fa-IR")} تومان
+              {productPrice.toLocaleString("fa-IR")} تومان
               <span className="mr-1 text-xs font-normal text-cocoa-500">
-                ({totalCount.toLocaleString("fa-IR")} کالا)
+                ({productCount.toLocaleString("fa-IR")} کالا)
               </span>
             </span>
           </div>

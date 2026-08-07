@@ -87,15 +87,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLines((prev) => {
       const existing = prev.find((line) => line.key === key);
       if (existing) {
-        const nextQuantity = maxQuantity
-          ? Math.min(existing.quantity + quantity, maxQuantity)
-          : existing.quantity + quantity;
+        const nextQuantity =
+          maxQuantity !== undefined
+            ? Math.min(existing.quantity + quantity, maxQuantity)
+            : existing.quantity + quantity;
         return prev.map((line) =>
           line.key === key ? { ...line, quantity: nextQuantity } : line,
         );
       }
 
-      const initialQuantity = maxQuantity ? Math.min(quantity, maxQuantity) : quantity;
+      const initialQuantity =
+        maxQuantity !== undefined ? Math.min(quantity, maxQuantity) : quantity;
+      if (initialQuantity <= 0) return prev;
+
       const newLine: CartLine = {
         key,
         itemId: item.id,
@@ -116,7 +120,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (quantity <= 0) return prev.filter((line) => line.key !== key);
       return prev.map((line) =>
         line.key === key
-          ? { ...line, quantity: line.maxQuantity ? Math.min(quantity, line.maxQuantity) : quantity }
+          ? {
+              ...line,
+              quantity:
+                line.maxQuantity !== undefined
+                  ? Math.min(quantity, line.maxQuantity)
+                  : quantity,
+            }
           : line,
       );
     });
