@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import ProductImageSlider from "./ProductImageSlider";
 import type { MenuItem } from "../config/siteConfig";
 
@@ -114,6 +114,13 @@ function ProductModal({
                 ? `${item.price.toLocaleString("fa-IR")} تومان`
                 : "به‌زودی"}
             </span>
+            <button
+              type="button"
+              aria-label={`افزودن ${item.title}`}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95"
+            >
+              <Plus className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </motion.div>

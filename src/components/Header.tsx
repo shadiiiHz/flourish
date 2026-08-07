@@ -18,7 +18,7 @@ function Header() {
           <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="shrink-0 flex items-center justify-center overflow-hidden rounded-full ring-1 ring-sand-100 sm:h-14 sm:w-14"
+            className="shrink-0 flex items-center justify-center overflow-hidden rounded-full ring-1 ring-sand-100 outline-none focus-visible:ring-2 focus-visible:ring-sand-300 sm:h-14 sm:w-14"
           >
             <img
               src={logo}
