@@ -75,8 +75,8 @@ function ProductCard({
             </p>
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-2 sm:px-3 sm:pb-3 sm:pt-2 sm:pb-4">
-            <div className="flex min-w-0 items-baseline gap-1.5">
+          <div className="flex items-center justify-between pt-2 sm:px-3 sm:pb-3 sm:pt-2 sm:pb-4">
+            <div className="flex items-baseline gap-1.5">
               {hasDiscount && (
                 <span className="text-xs text-cocoa-500 line-through">
                   {item.price.toLocaleString("fa-IR")}
@@ -87,16 +87,16 @@ function ProductCard({
               </span>
             </div>
             {!hasVariants && cartQuantity > 0 ? (
-              <div className="flex shrink-0 items-center gap-0.5 rounded-full border border-sand-100 bg-sand-50 p-0.5 sm:gap-2 sm:p-1">
+              <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-sand-100 bg-sand-50 p-0.5 sm:gap-2 sm:p-1">
                 <button
                   type="button"
                   aria-label="کاهش تعداد"
                   onClick={() => setQuantity(lineKeyFor(item.id), cartQuantity - 1)}
-                  className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 sm:h-7 sm:w-7"
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 sm:h-7 sm:w-7"
                 >
-                  <Minus className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5" />
+                  <Minus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 </button>
-                <span className="w-3 text-center text-[10px] font-bold text-cocoa-900 sm:w-4 sm:text-sm">
+                <span className="w-4 text-center text-xs font-bold text-cocoa-900 sm:text-sm">
                   {cartQuantity.toLocaleString("fa-IR")}
                 </span>
                 <button
@@ -104,9 +104,9 @@ function ProductCard({
                   aria-label="افزایش تعداد"
                   disabled={atMax}
                   onClick={() => addToCart(item)}
-                  className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 disabled:opacity-40 sm:h-7 sm:w-7"
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 disabled:opacity-40 sm:h-7 sm:w-7"
                 >
-                  <Plus className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5" />
+                  <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 </button>
               </div>
             ) : (
