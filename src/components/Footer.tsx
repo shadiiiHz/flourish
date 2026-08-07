@@ -80,13 +80,13 @@ function Footer() {
                     فلوریش
                   </h2>
                   <p className="text-xs font-medium text-sand-500 sm:text-sm">
-                    بوتیک شیرینی و نانوایی
+                    بوتیک نان و شیرینی
                   </p>
                 </div>
               </div>
 
               <p className="max-w-sm text-sm leading-7 text-cocoa-600 sm:text-[15px]">
-                فلوریش، بوتیک شیرینی و نانوایی مدرن است که با عشق به طعم‌های
+                فلوریش، بوتیک نان و شیرینی مدرن است که با عشق به طعم‌های
                 اصیل و بهترین مواد اولیه، محصولاتی دست‌ساز و تازه می‌آفریند. ما
                 هر روز، لحظه‌های شیرین شما را با دقت و ظرافت می‌سازیم.
               </p>
@@ -158,7 +158,7 @@ function Footer() {
 
           <div className="border-t border-white/50 px-6 py-5 sm:px-10">
             <p className="text-center text-xs text-cocoa-500 sm:text-sm">
-              تمامی حقوق مادی و معنوی، متعلق به بوتیک شیرینی فلوریش است. ©{" "}
+              تمامی حقوق مادی و معنوی، متعلق به بوتیک نان و شیرینی فلوریش است. ©{" "}
               {currentPersianYear}
             </p>
           </div>
