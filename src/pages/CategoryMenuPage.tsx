@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Clock, MapPin, Phone } from "lucide-react";
 import { siteConfig, type CategoryTabId } from "../config/siteConfig";
 import ProductCard from "../components/ProductCard";
-import menuBanner from "../assets/cat-banner.jpg";
+import menuBanner from "../assets/cat-banner.jpg"
 
 const { tabs, items: categoriesByTab } = siteConfig.categories;
 
@@ -11,7 +12,14 @@ const flatCategories = tabs.flatMap((tab) =>
   categoriesByTab[tab.id].map((category) => ({ id: category.id, groupId: tab.id })),
 );
 
+const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+const toPersianDigits = (value: string) =>
+  value.replace(/\d/g, (digit) => persianDigits[Number(digit)]);
+
+type PageSection = "menu" | "info";
+
 function CategoryMenuPage() {
+  const [activeSection, setActiveSection] = useState<PageSection>("menu");
   const [activeGroup, setActiveGroup] = useState<CategoryTabId>(flatCategories[0].groupId);
   const [activeCategoryId, setActiveCategoryId] = useState<string>(flatCategories[0].id);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -97,24 +105,126 @@ function CategoryMenuPage() {
   return (
     <div className="relative">
       <section className="relative px-3 pt-8 sm:px-6 sm:pt-10">
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:h-[420px] sm:rounded-[3rem]">
+        <div className="relative mx-auto h-[300px] max-w-6xl overflow-hidden rounded-[2.25rem] border border-sand-100 shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:h-[420px] sm:rounded-[3rem] md:h-[460px]">
           <img
             src={menuBanner}
             alt="بوتیک نان و شیرینی فلوریش"
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/30 to-transparent" />
-          <div className="absolute inset-0 flex flex-col items-start justify-center gap-2 p-6 text-right sm:p-10">
+          <div className="absolute inset-0 flex flex-col items-start justify-end gap-2 p-6 text-right sm:p-10">
             <h1 className="font-display text-2xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] sm:text-3xl md:text-4xl">
               بوتیک نان و شیرینی فلوریش
             </h1>
             <p className="text-sm text-white/85 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] sm:text-base">
               {siteConfig.contact.address}
             </p>
+
+            <div className="mt-2 flex w-fit items-center gap-1 rounded-full border border-white/40 bg-white/20 p-1.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_10px_30px_-12px_rgba(0,0,0,0.45)] backdrop-blur-2xl backdrop-saturate-150">
+              {(
+                [
+                  { id: "menu", label: "منو" },
+                  { id: "info", label: "اطلاعات مجموعه" },
+                ] as const
+              ).map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setActiveSection(id)}
+                  className="relative rounded-full px-5 py-2.5 text-xs font-bold transition-colors sm:px-8 sm:text-sm"
+                >
+                  {activeSection === id && (
+                    <motion.span
+                      layoutId="menu-section-tab-highlight"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      className="absolute inset-0 rounded-full bg-white/90 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.45)]"
+                    />
+                  )}
+                  <span
+                    className={`relative z-10 ${activeSection === id ? "text-cocoa-900" : "text-white"}`}
+                  >
+                    {label}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
+      {activeSection === "info" && (
+        <div className="mx-auto max-w-5xl px-3 pb-16 pt-8 sm:px-6">
+          <div className="grid gap-8 rounded-[2rem] border border-sand-100 bg-white/70 p-6 shadow-[0_20px_50px_-30px_rgba(138,84,39,0.3)] backdrop-blur-xl sm:p-8 md:grid-cols-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sand-50 text-sand-500">
+                  <MapPin className="h-5 w-5" strokeWidth={1.9} />
+                </span>
+                <div>
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
+                    آدرس
+                  </h3>
+                  <p className="mt-1 text-sm leading-7 text-cocoa-600">
+                    {siteConfig.contact.address}
+                  </p>
+                  <a
+                    href={siteConfig.contact.mapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-block text-xs font-semibold text-sand-500 transition-colors hover:text-sand-600"
+                  >
+                    مشاهده در نقشه
+                  </a>
+                </div>
+              </div>
+
+              <div className="aspect-square h-100 w-100 overflow-hidden rounded-[1.5rem] border border-sand-100">
+                <iframe
+                  src={siteConfig.contact.mapEmbedUrl}
+                  title="موقعیت فلوریش روی نقشه"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full border-0"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sand-50 text-sand-500">
+                  <Phone className="h-5 w-5" strokeWidth={1.9} />
+                </span>
+                <div>
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
+                    تلفن
+                  </h3>
+                  <a
+                    href={`tel:${siteConfig.contact.phone}`}
+                    className="mt-1 inline-block text-sm text-cocoa-600 transition-colors hover:text-sand-500"
+                  >
+                    {toPersianDigits(siteConfig.contact.phone)}
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sand-50 text-sand-500">
+                  <Clock className="h-5 w-5" strokeWidth={1.9} />
+                </span>
+                <div>
+                  <h3 className="font-display text-sm font-bold text-cocoa-900 sm:text-base">
+                    ساعات کاری
+                  </h3>
+                  <p className="mt-1 text-sm text-cocoa-600">{siteConfig.contact.hours}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeSection === "menu" && (
+      <>
       <div
         ref={navRef}
         style={{ top: headerHeight }}
@@ -216,6 +326,8 @@ function CategoryMenuPage() {
           </section>
         ))}
       </div>
+      </>
+      )}
     </div>
   );
 }
