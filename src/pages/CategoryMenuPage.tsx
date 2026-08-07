@@ -178,7 +178,7 @@ function CategoryMenuPage() {
                 </div>
               </div>
 
-              <div className="aspect-square h-100 w-100 overflow-hidden rounded-[1.5rem] border border-sand-100">
+              <div className="aspect-square sm:h-50 sm:h-50 lg:h-100 lg:w-100 overflow-hidden rounded-[1.5rem] border border-sand-100">
                 <iframe
                   src={siteConfig.contact.mapEmbedUrl}
                   title="موقعیت فلوریش روی نقشه"
