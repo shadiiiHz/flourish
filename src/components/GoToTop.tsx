@@ -29,7 +29,7 @@ function GoToTop() {
           whileHover={{ scale: 1.06, y: -2 }}
           whileTap={{ scale: 0.94 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="fixed z-50 flex items-center justify-center  sm:bottom-8 sm:inset-s-4 sm:h-20 sm:w-20"
+          className="fixed z-50 flex items-center justify-center  sm:bottom-8 sm:inset-s-4 sm:h-10 sm:w-10"
         >
           <motion.img
             src={croissant}

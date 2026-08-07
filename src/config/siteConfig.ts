@@ -187,7 +187,7 @@ export const siteConfig = {
     mapUrl: 'https://maps.app.goo.gl/Q8UY1Cci1fnvFiHs8',
     mapEmbedUrl: 'https://maps.google.com/maps?q=36.6549149,51.4902702&z=17&output=embed',
     hours: 'شنبه تا جمعه، ۹:۰۰ الی ۲۲:۳۰',
-    instagram: '#',
+    instagram: 'https://www.instagram.com/flourishbakery.ir',
   },
   newItems: {
     items: [

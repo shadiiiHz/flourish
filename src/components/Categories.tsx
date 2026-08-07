@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -49,7 +49,7 @@ function Categories() {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const track = trackRef.current;
     if (!track) return;
     track.scrollTo({ left: 0 });
@@ -110,7 +110,7 @@ function Categories() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="grid grid-flow-col auto-cols-[calc((100%_-_1.5rem)/3)] justify-center overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-4 sm:auto-cols-[calc((100%_-_4rem)/4)] gap-2 sm:gap-4 lg:auto-cols-[calc((100%_-_7rem)/7)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className={`grid grid-flow-col auto-cols-[calc((100%_-_1.5rem)/3)] ${sliderState.overflowing ? "justify-start" : "justify-center"} overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 pt-4 sm:auto-cols-[calc((100%_-_4rem)/4)] gap-2 sm:gap-4 lg:auto-cols-[calc((100%_-_7rem)/7)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
           >
             {categories.map(({ id, title, image }) => (
               <motion.button
@@ -121,12 +121,12 @@ function Categories() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex snap-start flex-col items-center justify-center rounded-[1.75rem] border border-sand-50 bg-white text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] p-4 sm:p-2"
+                className="group flex gap-2 sm:gap-1 snap-start flex-col items-center justify-center rounded-[1.75rem] border border-sand-50 bg-white text-center shadow-[0_16px_40px_-24px_rgba(138,84,39,0.35)] transition-colors hover:border-sand-100/70 hover:bg-sand-50/20 sm:rounded-[2rem] p-4 sm:p-2"
               >
                 <img
                   src={image}
                   alt=""
-                  className="h-17 w-17 object-cover rounded-full bg-transparent sm:h-25 sm:w-25"
+                  className="h-12 w-12 object-cover rounded-full bg-transparent sm:h-15 sm:w-15"
                 />
                 <div className="flex flex-col gap-1">
                   <h3 className="font-display text-[11px] font-bold text-cocoa-900 sm:text-[12px]">
