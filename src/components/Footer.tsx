@@ -40,7 +40,7 @@ function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="pointer-events-none absolute z-50 -left-14 -top-10 h-20 w-20 select-none sm:h-40 sm:w-40"
+          className="pointer-events-none absolute z-50 -left-14 -top-10 hidden select-none sm:block sm:h-40 sm:w-40"
         >
           <motion.img
             src={croissant}
