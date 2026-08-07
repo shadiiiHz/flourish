@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { siteConfig, type CategoryTabId } from "../config/siteConfig";
 import ProductCard from "../components/ProductCard";
+import menuBanner from "../assets/cat-banner.jpg";
 
 const { tabs, items: categoriesByTab } = siteConfig.categories;
 
@@ -95,9 +96,24 @@ function CategoryMenuPage() {
 
   return (
     <div className="relative">
-      <div className="mx-auto max-w-6xl px-3 pb-2 pt-6 sm:px-6">
-        <h1 className="font-display text-2xl font-bold text-cocoa-900 sm:text-3xl">منو</h1>
-      </div>
+      <section className="relative px-3 pt-8 sm:px-6 sm:pt-10">
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] shadow-[0_30px_60px_-25px_rgba(138,84,39,0.35)] sm:h-[420px] sm:rounded-[3rem]">
+          <img
+            src={menuBanner}
+            alt="بوتیک نان و شیرینی فلوریش"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/30 to-transparent" />
+          <div className="absolute inset-0 flex flex-col items-start justify-center gap-2 p-6 text-right sm:p-10">
+            <h1 className="font-display text-2xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] sm:text-3xl md:text-4xl">
+              بوتیک نان و شیرینی فلوریش
+            </h1>
+            <p className="text-sm text-white/85 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] sm:text-base">
+              {siteConfig.contact.address}
+            </p>
+          </div>
+        </div>
+      </section>
 
       <div
         ref={navRef}
