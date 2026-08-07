@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { siteConfig } from "../config/siteConfig";
 import placeholder from "../assets/placeholder.png";
+
+const firstCategoryId =
+  siteConfig.categories.items[siteConfig.categories.tabs[0].id][0].id;
 
 function buildWhatsappMessage(
   lines: { title: string; variantTitle?: string; price: number; quantity: number }[],
@@ -22,6 +26,16 @@ function buildWhatsappMessage(
 
 function CartDrawer() {
   const { lines, totalCount, totalPrice, closeCart, setQuantity, removeLine } = useCart();
+  const navigate = useNavigate();
+
+  const goToMenu = () => {
+    // The drawer's own unmount (and its overflow-lock cleanup) is delayed by
+    // its exit animation, which would race with the menu page's scroll-to-hash
+    // effect. Clear the lock synchronously so that scroll isn't blocked.
+    document.body.style.overflow = "";
+    closeCart();
+    navigate(`/menu#${firstCategoryId}`);
+  };
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -91,7 +105,7 @@ function CartDrawer() {
             <p className="text-xs text-cocoa-500">محصولی که دوست دارید را به سبد اضافه کنید</p>
             <button
               type="button"
-              onClick={closeCart}
+              onClick={goToMenu}
               className="mt-2 rounded-full bg-sand-400 px-5 py-2.5 text-sm font-bold text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95"
             >
               مشاهده منو
