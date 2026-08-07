@@ -1,0 +1,125 @@
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
+import { X } from "lucide-react";
+import ProductImageSlider from "./ProductImageSlider";
+import type { MenuItem } from "../config/siteConfig";
+
+function ProductModal({
+  item,
+  categoryTitle,
+  onClose,
+}: {
+  item: MenuItem;
+  categoryTitle?: string;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <motion.div
+      className="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+    >
+      <div
+        className="absolute inset-0 bg-cocoa-900/40 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="product-modal-title"
+        initial={{ opacity: 0, scale: 0.94, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 12 }}
+        transition={{ type: "spring", stiffness: 320, damping: 30 }}
+        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-[1.75rem] border border-white/40 bg-white/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_40px_80px_-30px_rgba(74,44,18,0.55)] backdrop-blur-2xl backdrop-saturate-150 sm:min-h-[28rem] sm:max-h-[85svh] sm:flex-row sm:rounded-[2rem]"
+      >
+        <button
+          type="button"
+          aria-label="بستن"
+          onClick={onClose}
+          className="absolute left-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-white/70 text-cocoa-700 shadow-sm backdrop-blur transition hover:bg-white sm:left-4 sm:top-4"
+        >
+          <X className="h-4.5 w-4.5" />
+        </button>
+
+        <div className="sm:w-1/2 sm:shrink-0">
+          <ProductImageSlider
+            images={item.images}
+            alt={item.title}
+            aspectClassName="h-64 sm:h-full sm:min-h-[28rem]"
+          />
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-5 sm:p-7">
+          <div>
+            {categoryTitle && (
+              <span className="mb-2 inline-block rounded-full bg-sand-50 px-3 py-1 text-[11px] font-semibold text-sand-400">
+                {categoryTitle}
+              </span>
+            )}
+            <h2
+              id="product-modal-title"
+              className="font-display text-xl font-bold text-cocoa-900 sm:text-2xl"
+            >
+              {item.title}
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-cocoa-600">
+              {item.description}
+            </p>
+          </div>
+
+          {(item.weight || item.ingredients || item.servingSize) && (
+            <div className="flex flex-col gap-2 border-t border-white/50 pt-4">
+              {item.weight && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-semibold text-cocoa-700">وزن</span>
+                  <span className="text-cocoa-600">{item.weight}</span>
+                </div>
+              )}
+              {item.servingSize && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-semibold text-cocoa-700">مناسب برای</span>
+                  <span className="text-cocoa-600">{item.servingSize}</span>
+                </div>
+              )}
+              {item.ingredients && (
+                <div className="text-sm leading-6">
+                  <span className="font-semibold text-cocoa-700">ترکیبات: </span>
+                  <span className="text-cocoa-600">{item.ingredients}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="mt-auto flex items-center justify-between border-t border-white/50 pt-4">
+            <span className="text-lg font-bold text-sand-400">
+              {item.price > 0
+                ? `${item.price.toLocaleString("fa-IR")} تومان`
+                : "به‌زودی"}
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body,
+  );
+}
+
+export default ProductModal;

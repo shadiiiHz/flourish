@@ -40,6 +40,10 @@ export interface MenuItem {
   description: string
   price: number
   images: string[]
+  category?: string
+  weight?: string
+  ingredients?: string
+  servingSize?: string
 }
 
 export interface Category {
@@ -50,13 +54,7 @@ export interface Category {
   items: MenuItem[]
 }
 
-export interface NewItem {
-  id: string
-  title: string
-  description: string
-  price: number
-  images: string[]
-}
+export type NewItem = MenuItem
 
 const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
 const toPersianDigits = (value: number) =>
@@ -73,6 +71,10 @@ function createPlaceholderItems(
     description: 'توضیحات این محصول به‌زودی تکمیل می‌شود',
     price: 0,
     images: [],
+    category: categoryTitle,
+    weight: 'به‌زودی',
+    ingredients: 'به‌زودی تکمیل می‌شود',
+    servingSize: 'به‌زودی',
   }))
 }
 
@@ -177,6 +179,10 @@ export const siteConfig = {
         description: 'کروسان تازه و لایه‌لایه با کره فرانسوی',
         price: 85000,
         images: [item1],
+        category: 'پیستری',
+        weight: '۹۰ گرم',
+        ingredients: 'آرد گندم، کره فرانسوی، شکر، مخمر، نمک',
+        servingSize: '۱ نفر',
       },
       {
         id: 'sourdough-bread',
@@ -184,6 +190,10 @@ export const siteConfig = {
         description: 'نان سنتی پخت‌شده با مایه ترش طبیعی',
         price: 65000,
         images: [item2 , item2_2],
+        category: 'نان خمیر ترش',
+        weight: '۵۰۰ گرم',
+        ingredients: 'آرد سبوس‌دار، آب، مایه ترش طبیعی، نمک',
+        servingSize: '۳ تا ۴ نفر',
       },
       {
         id: 'vanilla-latte',
@@ -191,6 +201,10 @@ export const siteConfig = {
         description: 'اسپرسو با شیر بخاردیده و شربت وانیل',
         price: 120000,
         images: [],
+        category: 'نوشیدنی گرم بر پایه اسپرسو',
+        weight: '۳۶۰ میلی‌لیتر',
+        ingredients: 'اسپرسو، شیر، شربت وانیل',
+        servingSize: '۱ نفر',
       },
       {
         id: 'matcha-latte',
@@ -198,6 +212,10 @@ export const siteConfig = {
         description: 'ماچا ژاپنی اصل با شیر بادام',
         price: 135000,
         images: [],
+        category: 'ماچا',
+        weight: '۳۶۰ میلی‌لیتر',
+        ingredients: 'پودر ماچا درجه‌یک، شیر بادام، شربت وانیل',
+        servingSize: '۱ نفر',
       },
       {
         id: 'chocolate-cake',
@@ -205,6 +223,10 @@ export const siteConfig = {
         description: 'کیک لایه‌ای با گاناش شکلات تلخ',
         price: 220000,
         images: [],
+        category: 'کیک',
+        weight: '۱۲۰۰ گرم',
+        ingredients: 'شکلات تلخ، آرد، تخم‌مرغ، کره، خامه',
+        servingSize: '۶ تا ۸ نفر',
       },
       {
         id: 'peach-iced-tea',
@@ -212,6 +234,10 @@ export const siteConfig = {
         description: 'دمنوش سرد و خنک با طعم هلو',
         price: 95000,
         images: [],
+        category: 'نوشیدنی سرد',
+        weight: '۴۵۰ میلی‌لیتر',
+        ingredients: 'چای سیاه، شربت هلو، یخ، لیمو',
+        servingSize: '۱ نفر',
       },
     ] satisfies NewItem[],
   },

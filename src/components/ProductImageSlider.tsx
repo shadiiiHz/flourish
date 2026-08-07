@@ -10,9 +10,9 @@ function ImagePlaceholder({ alt }: { alt: string }) {
     <div
       role="img"
       aria-label={alt}
-      className="absolute inset-0 h-full w-full bg-white"
+      className="absolute inset-0 flex h-full w-full items-center justify-center bg-white"
     >
-      <img src={placeholder} alt="" />
+      <img src={placeholder} alt="" className="object-contain" />
     </div>
   );
 }
@@ -20,9 +20,11 @@ function ImagePlaceholder({ alt }: { alt: string }) {
 function ProductImageSlider({
   images,
   alt,
+  aspectClassName = "aspect-square",
 }: {
   images: string[];
   alt: string;
+  aspectClassName?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [failedSrcs, setFailedSrcs] = useState<Record<number, boolean>>({});
@@ -44,7 +46,7 @@ function ProductImageSlider({
   const currentFailed = !hasImages || failedSrcs[index];
 
   return (
-    <div className="group/slider relative aspect-square w-full overflow-hidden bg-white">
+    <div className={`group/slider relative ${aspectClassName} w-full overflow-hidden bg-white`}>
       <motion.div
         className="relative h-full w-full touch-pan-y"
         onPanEnd={hasMultiple ? handlePanEnd : undefined}
@@ -76,7 +78,10 @@ function ProductImageSlider({
           <button
             type="button"
             aria-label="تصویر بعدی"
-            onClick={() => go(1)}
+            onClick={(e) => {
+              e.stopPropagation();
+              go(1);
+            }}
             className="absolute left-2 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-cocoa-700 opacity-0 shadow-sm backdrop-blur transition-opacity group-hover/slider:opacity-100"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -84,7 +89,10 @@ function ProductImageSlider({
           <button
             type="button"
             aria-label="تصویر قبلی"
-            onClick={() => go(-1)}
+            onClick={(e) => {
+              e.stopPropagation();
+              go(-1);
+            }}
             className="absolute right-2 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-cocoa-700 opacity-0 shadow-sm backdrop-blur transition-opacity group-hover/slider:opacity-100"
           >
             <ChevronRight className="h-4 w-4" />
@@ -96,7 +104,10 @@ function ProductImageSlider({
                 key={i}
                 type="button"
                 aria-label={`رفتن به تصویر ${i + 1}`}
-                onClick={() => setIndex(i)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIndex(i);
+                }}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   i === index ? "w-4 bg-white" : "w-1.5 bg-white/60"
                 }`}
