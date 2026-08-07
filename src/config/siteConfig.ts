@@ -164,7 +164,7 @@ export const siteConfig = {
   contact: {
     phone: '09960080286',
     whatsapp: '989960080286',
-    email: 'alimoghaddamfar@yahoo.com',
+    email: 'flourishbakery2025@gmail.com',
     address: 'مازندران، نوشهر، بلوار کریمی، صد متر بعد از پاساژ لنگر',
     mapUrl: 'https://maps.app.goo.gl/Q8UY1Cci1fnvFiHs8',
     mapEmbedUrl: 'https://maps.google.com/maps?q=36.6549149,51.4902702&z=17&output=embed',
