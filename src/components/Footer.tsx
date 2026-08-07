@@ -85,11 +85,13 @@ function Footer() {
                 </div>
               </div>
 
-              <p className="max-w-sm text-sm leading-7 text-cocoa-600 sm:text-[15px]">
-                فلوریش، بوتیک نان و شیرینی مدرن است که با عشق به طعم‌های
-                اصیل و بهترین مواد اولیه، محصولاتی دست‌ساز و تازه می‌آفریند. ما
-                هر روز، لحظه‌های شیرین شما را با دقت و ظرافت می‌سازیم.
-              </p>
+              <div className="max-w-sm">
+                <p className="text-justify text-sm leading-7 text-cocoa-600 sm:text-[15px]">
+                  فلوریش، بوتیک نان و شیرینی مدرن است که با عشق به طعم‌های
+                  اصیل و بهترین مواد اولیه، محصولاتی دست‌ساز و تازه می‌آفریند. ما
+                  هر روز، لحظه‌های شیرین شما را با دقت و ظرافت می‌سازیم.
+                </p>
+              </div>
 
               <div className="mt-1 flex items-center gap-3">
                 <a

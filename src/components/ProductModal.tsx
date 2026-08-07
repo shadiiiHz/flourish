@@ -70,7 +70,7 @@ function ProductModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
         transition={{ type: "spring", stiffness: 320, damping: 30 }}
-        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-[1.75rem] border border-white/40 bg-white/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_40px_80px_-30px_rgba(74,44,18,0.55)] backdrop-blur-2xl backdrop-saturate-150 sm:min-h-[28rem] sm:max-h-[85svh] sm:flex-row sm:rounded-[2rem]"
+        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-[1.75rem] border border-white/40 bg-white/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_40px_80px_-30px_rgba(74,44,18,0.55)] backdrop-blur-2xl backdrop-saturate-150 sm:min-h-[28rem] sm:max-h-[85svh] sm:flex-row sm:rounded-[2rem]"
       >
         <button
           type="button"
