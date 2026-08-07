@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 import ProductImageSlider from "./ProductImageSlider";
-import type { MenuItem } from "../config/siteConfig";
+import { getDiscountedPrice, type MenuItem } from "../config/siteConfig";
 
 function ProductModal({
   item,
@@ -14,6 +14,11 @@ function ProductModal({
   categoryTitle?: string;
   onClose: () => void;
 }) {
+  const hasDiscount = !!item.discountPercent && item.price > 0;
+  const finalPrice = hasDiscount
+    ? getDiscountedPrice(item.price, item.discountPercent)
+    : item.price;
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -59,7 +64,12 @@ function ProductModal({
           <X className="h-4.5 w-4.5" />
         </button>
 
-        <div className="sm:w-1/2 sm:shrink-0">
+        <div className="relative sm:w-1/2 sm:shrink-0">
+          {hasDiscount && (
+            <span className="absolute right-3 top-3 z-20 rounded-full bg-sand-400 px-2.5 py-1 text-xs font-bold text-white shadow-[0_6px_16px_-6px_rgba(190,18,60,0.7)]">
+              {item.discountPercent!.toLocaleString("fa-IR")}٪ تخفیف
+            </span>
+          )}
           <ProductImageSlider
             images={item.images}
             alt={item.title}
@@ -109,11 +119,18 @@ function ProductModal({
           )}
 
           <div className="mt-auto flex items-center justify-between border-t border-white/50 pt-4">
-            <span className="text-lg font-bold text-sand-400">
-              {item.price > 0
-                ? `${item.price.toLocaleString("fa-IR")} تومان`
-                : "به‌زودی"}
-            </span>
+            <div className="flex items-baseline gap-2">
+              {hasDiscount && (
+                <span className="text-sm text-cocoa-500 line-through">
+                  {item.price.toLocaleString("fa-IR")}
+                </span>
+              )}
+              <span className="text-lg font-bold text-sand-400">
+                {item.price > 0
+                  ? `${finalPrice.toLocaleString("fa-IR")} تومان`
+                  : "به‌زودی"}
+              </span>
+            </div>
             <button
               type="button"
               aria-label={`افزودن ${item.title}`}

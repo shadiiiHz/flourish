@@ -44,6 +44,7 @@ export interface MenuItem {
   weight?: string
   ingredients?: string
   servingSize?: string
+  discountPercent?: number
 }
 
 export interface Category {
@@ -59,6 +60,11 @@ export type NewItem = MenuItem
 const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
 const toPersianDigits = (value: number) =>
   String(value).replace(/\d/g, (digit) => persianDigits[Number(digit)])
+
+export function getDiscountedPrice(price: number, discountPercent?: number) {
+  if (!discountPercent) return price
+  return Math.round((price * (1 - discountPercent / 100)) / 1000) * 1000
+}
 
 function createPlaceholderItems(
   categoryId: string,
@@ -180,6 +186,7 @@ export const siteConfig = {
         price: 85000,
         images: [item1],
         category: 'پیستری',
+        discountPercent: 20,
         weight: '۹۰ گرم',
         ingredients: 'آرد گندم، کره فرانسوی، شکر، مخمر، نمک',
         servingSize: '۱ نفر',
@@ -224,6 +231,7 @@ export const siteConfig = {
         price: 220000,
         images: [],
         category: 'کیک',
+        discountPercent: 15,
         weight: '۱۲۰۰ گرم',
         ingredients: 'شکلات تلخ، آرد، تخم‌مرغ، کره، خامه',
         servingSize: '۶ تا ۸ نفر',
