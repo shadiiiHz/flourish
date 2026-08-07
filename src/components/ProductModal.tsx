@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, X } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import ProductImageSlider from "./ProductImageSlider";
 import CartVariantModal from "./CartVariantModal";
 import { useCart } from "../context/CartContext";
@@ -17,7 +17,7 @@ function ProductModal({
   onClose: () => void;
 }) {
   const [variantModalOpen, setVariantModalOpen] = useState(false);
-  const { addToCart, notify, getQuantity } = useCart();
+  const { addToCart, notify, getQuantity, setQuantity, lineKeyFor } = useCart();
   const hasDiscount = !!item.discountPercent && item.price > 0;
   const finalPrice = hasDiscount
     ? getDiscountedPrice(item.price, item.discountPercent)
@@ -70,7 +70,7 @@ function ProductModal({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
         transition={{ type: "spring", stiffness: 320, damping: 30 }}
-        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-[1.75rem] border border-white/40 bg-white/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_40px_80px_-30px_rgba(74,44,18,0.55)] backdrop-blur-2xl backdrop-saturate-150 sm:min-h-[28rem] sm:max-h-[85svh] sm:flex-row sm:rounded-[2rem]"
+        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-[1.75rem] border border-white/40 bg-white/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_40px_80px_-30px_rgba(74,44,18,0.55)] backdrop-blur-2xl backdrop-saturate-150 sm:min-h-[28rem] sm:max-h-[85svh] sm:flex-row sm:rounded-[2rem]"
       >
         <button
           type="button"
@@ -148,15 +148,40 @@ function ProductModal({
                   : "به‌زودی"}
               </span>
             </div>
-            <button
-              type="button"
-              aria-label={`افزودن ${item.title}`}
-              onClick={handleAddClick}
-              disabled={outOfStock || atMax}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40"
-            >
-              <Plus className="h-5 w-5" />
-            </button>
+            {!hasVariants && cartQuantity > 0 ? (
+              <div className="flex shrink-0 items-center gap-3 rounded-full border border-sand-100 bg-sand-50 p-1">
+                <button
+                  type="button"
+                  aria-label="کاهش تعداد"
+                  onClick={() => setQuantity(lineKeyFor(item.id), cartQuantity - 1)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95"
+                >
+                  <Minus className="h-4 w-4" />
+                </button>
+                <span className="w-5 text-center text-sm font-bold text-cocoa-900">
+                  {cartQuantity.toLocaleString("fa-IR")}
+                </span>
+                <button
+                  type="button"
+                  aria-label="افزایش تعداد"
+                  disabled={atMax}
+                  onClick={() => addToCart(item)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 disabled:opacity-40"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                aria-label={`افزودن ${item.title}`}
+                onClick={handleAddClick}
+                disabled={outOfStock || atMax}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Plus className="h-5 w-5" />
+              </button>
+            )}
           </div>
         </div>
       </motion.div>

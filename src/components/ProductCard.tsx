@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import ProductImageSlider from "./ProductImageSlider";
 import ProductModal from "./ProductModal";
@@ -16,7 +16,7 @@ function ProductCard({
 }) {
   const [open, setOpen] = useState(false);
   const [variantModalOpen, setVariantModalOpen] = useState(false);
-  const { addToCart, notify, getQuantity } = useCart();
+  const { addToCart, notify, getQuantity, setQuantity, lineKeyFor } = useCart();
   const hasDiscount = !!item.discountPercent && item.price > 0;
   const finalPrice = hasDiscount
     ? getDiscountedPrice(item.price, item.discountPercent)
@@ -86,15 +86,40 @@ function ProductCard({
                 {item.price > 0 ? `${finalPrice.toLocaleString("fa-IR")} تومان` : "به‌زودی"}
               </span>
             </div>
-            <button
-              type="button"
-              aria-label={`افزودن ${item.title}`}
-              onClick={handleAddClick}
-              disabled={outOfStock || atMax}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:w-9"
-            >
-              <Plus className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
-            </button>
+            {!hasVariants && cartQuantity > 0 ? (
+              <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-sand-100 bg-sand-50 p-0.5 sm:gap-2 sm:p-1">
+                <button
+                  type="button"
+                  aria-label="کاهش تعداد"
+                  onClick={() => setQuantity(lineKeyFor(item.id), cartQuantity - 1)}
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 sm:h-7 sm:w-7"
+                >
+                  <Minus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                </button>
+                <span className="w-4 text-center text-xs font-bold text-cocoa-900 sm:text-sm">
+                  {cartQuantity.toLocaleString("fa-IR")}
+                </span>
+                <button
+                  type="button"
+                  aria-label="افزایش تعداد"
+                  disabled={atMax}
+                  onClick={() => addToCart(item)}
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-cocoa-700 shadow-sm transition active:scale-95 disabled:opacity-40 sm:h-7 sm:w-7"
+                >
+                  <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                aria-label={`افزودن ${item.title}`}
+                onClick={handleAddClick}
+                disabled={outOfStock || atMax}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sand-400 text-white shadow-[0_10px_20px_-8px_rgba(186,107,38,0.6)] transition-transform hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-40 sm:h-9 sm:w-9"
+              >
+                <Plus className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+              </button>
+            )}
           </div>
         </div>
       </article>
