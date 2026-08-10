@@ -9,7 +9,8 @@ function FieldShell({ label, children }: { label: string; children: React.ReactN
   return (
     <div className="relative z-10">
       <span
-        className="absolute -top-2.5 right-4 z-10 bg-white px-2 text-xs font-semibold text-sand-500"
+        className="absolute -top-2.5 right-4 z-10 px-2 text-xs font-semibold text-sand-500"
+        style={{background: "linear-gradient(to bottom, #F8F8F7 60%, #FFFFFF 100%)"}}
       >
         {label}
       </span>
