@@ -7,6 +7,7 @@ import GoToTop from './components/GoToTop'
 import CartDrawer from './components/CartDrawer'
 import CartToast from './components/CartToast'
 import AuthModal from './components/AuthModal'
+import AuthToast from './components/AuthToast'
 import { CartProvider, useCart } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import Home from './pages/Home'
@@ -53,6 +54,7 @@ function App() {
             <GoToTop />
             <CartOverlay />
             <AuthModal />
+            <AuthToast />
           </div>
         </BrowserRouter>
       </CartProvider>

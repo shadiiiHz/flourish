@@ -25,6 +25,8 @@ interface AuthContextValue {
   verifyOtp: (phone: string, code: string) => Promise<boolean>;
   loginWithPassword: (phone: string, password: string) => Promise<boolean>;
   logout: () => void;
+  toast: string | null;
+  notify: (message: string) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -47,18 +49,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authView, setAuthView] = useState<AuthView>("otp-phone");
   const [pendingOtp, setPendingOtp] = useState<{ phone: string; code: string } | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     else window.localStorage.removeItem(STORAGE_KEY);
   }, [user]);
 
-  // بدون سرویس پیامک واقعی، کد به‌صورت شبیه‌سازی‌شده ساخته و در کنسول چاپ می‌شود
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(null), 5500);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  const notify = (message: string) => setToast(message);
+
+  // بدون سرویس پیامک واقعی، کد به‌صورت شبیه‌سازی‌شده ساخته می‌شود.
+  // برای اتصال به یک سرویس واقعی، این تابع را با فراخوانی API پیامک
+  // (مثلاً کاوه‌نگار، ملی‌پیامک و...) جایگزین کنید و بخش نمایش کد در
+  // نوتیف را حذف کنید چون سرویس واقعی کد را در پیامک پیامک می‌کند، نه در UI.
   const requestOtp = async (phone: string) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     const code = String(Math.floor(10000 + Math.random() * 90000));
     console.info(`[Flourish] کد ورود شبیه‌سازی‌شده برای ${phone}: ${code}`);
     setPendingOtp({ phone, code });
+    notify(`کد یکبار مصرف شبیه‌سازی‌شده: ${code}`);
   };
 
   const verifyOtp = async (phone: string, code: string) => {
@@ -72,6 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }));
     setPendingOtp(null);
     setIsAuthOpen(false);
+    notify("با موفقیت وارد شدید");
     return true;
   };
 
@@ -80,10 +96,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!password) return false;
     setUser({ phone, hasPassword: true });
     setIsAuthOpen(false);
+    notify("با موفقیت وارد شدید");
     return true;
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    notify("از حساب کاربری خارج شدید");
+  };
 
   const value: AuthContextValue = {
     user,
@@ -100,6 +120,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     verifyOtp,
     loginWithPassword,
     logout,
+    toast,
+    notify,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
