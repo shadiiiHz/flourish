@@ -11,22 +11,11 @@ import {
   X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { normalizeDigits, PHONE_REGEX, toPersianDigits } from "../utils/phone";
 import logo from "../assets/textLogo.png";
 
 const OTP_LENGTH = 5;
 const RESEND_SECONDS = 60;
-const PHONE_REGEX = /^09\d{9}$/;
-
-const persianToEnglishDigits: Record<string, string> = {
-  "۰": "0", "۱": "1", "۲": "2", "۳": "3", "۴": "4",
-  "۵": "5", "۶": "6", "۷": "7", "۸": "8", "۹": "9",
-  "٠": "0", "١": "1", "٢": "2", "٣": "3", "٤": "4",
-  "٥": "5", "٦": "6", "٧": "7", "٨": "8", "٩": "9",
-};
-
-function normalizeDigits(value: string) {
-  return value.replace(/[۰-۹٠-٩]/g, (digit) => persianToEnglishDigits[digit] ?? digit);
-}
 
 function formatTimer(seconds: number) {
   const m = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -255,13 +244,13 @@ function AuthModal() {
                   inputMode="numeric"
                   dir="ltr"
                   placeholder="09xxxxxxxxx"
-                  value={phone}
+                  value={toPersianDigits(phone)}
                   onChange={(e) => setPhone(normalizeDigits(e.target.value))}
                   onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
                   className="w-full rounded-2xl border border-cocoa-900/10 bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 focus:border-sand-400"
                 />
               </FieldShell>
-              {error && <p className="-mt-2 text-xs font-semibold text-red-500">{error}</p>}
+              {error && <p className="-mt-2 text-xs font-semibold text-danger-500">{error}</p>}
 
               <button
                 type="button"
@@ -302,7 +291,7 @@ function AuthModal() {
                   inputMode="numeric"
                   dir="ltr"
                   placeholder="09xxxxxxxxx"
-                  value={phone}
+                  value={toPersianDigits(phone)}
                   onChange={(e) => setPhone(normalizeDigits(e.target.value))}
                   className="w-full rounded-2xl border border-cocoa-900/10 bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 focus:border-sand-400"
                 />
@@ -326,7 +315,7 @@ function AuthModal() {
                   className="w-full bg-transparent py-3.5 pl-2 pr-1 text-right text-base text-cocoa-900 outline-none placeholder:text-cocoa-500/40"
                 />
               </div>
-              {error && <p className="-mt-2 text-xs font-semibold text-red-500">{error}</p>}
+              {error && <p className="-mt-2 text-xs font-semibold text-danger-500">{error}</p>}
 
               <button
                 type="button"
@@ -367,7 +356,7 @@ function AuthModal() {
 
               <div className="flex flex-col items-center gap-1 text-sm">
                 <span className="text-cocoa-500">
-                  کد ارسال شده به شماره: <span dir="ltr">{phone}</span>
+                  کد ارسال شده به شماره: <span dir="ltr">{toPersianDigits(phone)}</span>
                 </span>
                 <button
                   type="button"
@@ -400,7 +389,7 @@ function AuthModal() {
                 ))}
               </div>
 
-              {error && <p className="text-xs font-semibold text-red-500">{error}</p>}
+              {error && <p className="text-xs font-semibold text-danger-500">{error}</p>}
 
               <div className="flex items-center gap-2 text-xs text-cocoa-500">
                 <span className="font-semibold" dir="ltr">

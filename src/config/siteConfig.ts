@@ -126,7 +126,7 @@ export const siteConfig = {
           id: 'cake',
           title: 'کیک',
           image: cakeImg,
-          note: 'تمام شیرینی های فرانسوی از 48 ساعت قبل به صورت کیک در سایزهای مختلف قابل سفارش هستند',
+          note: 'تمامی آیتم های پیستری از 48 ساعت قبل به صورت کیک در سایزهای مختلف قابل سفارش هستند',
           items: createPlaceholderItems('cake', 'کیک'),
         },
         { id: 'custom', title: 'آیتم‌های سفارشی', image: orderImg, items: createPlaceholderItems('custom', 'آیتم سفارشی') },

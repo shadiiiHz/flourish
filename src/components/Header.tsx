@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { User } from "lucide-react";
 import basket from "../assets/basketShopping.svg";
 import logo from "../assets/textLogo.png";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import ProfileMenu from "./ProfileMenu";
 
 function Header() {
   const { totalCount, openCart } = useCart();
@@ -46,13 +46,7 @@ function Header() {
         {/* Actions — left side in RTL */}
         <div className="flex items-center gap-2 sm:gap-4">
           {isAuthenticated ? (
-            <Link
-              to="/profile"
-              aria-label="پروفایل کاربری"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-50 text-sand-500 transition hover:bg-sand-100 sm:h-11 sm:w-11"
-            >
-              <User className="h-5 w-5" />
-            </Link>
+            <ProfileMenu />
           ) : (
             <div className="flex items-center gap-1.5 overflow-hidden sm:gap-1">
               <button

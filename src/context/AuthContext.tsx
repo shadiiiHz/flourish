@@ -9,6 +9,10 @@ import {
 export interface AuthUser {
   phone: string;
   hasPassword: boolean;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  avatar?: string;
 }
 
 export type AuthView = "otp-phone" | "otp-verify" | "password";
@@ -24,6 +28,9 @@ interface AuthContextValue {
   requestOtp: (phone: string) => Promise<void>;
   verifyOtp: (phone: string, code: string) => Promise<boolean>;
   loginWithPassword: (phone: string, password: string) => Promise<boolean>;
+  updateProfile: (
+    data: Partial<Pick<AuthUser, "firstName" | "lastName" | "email" | "avatar" | "phone">>,
+  ) => void;
   logout: () => void;
   toast: string | null;
   notify: (message: string) => void;
@@ -58,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => setToast(null), 5500);
+    const timer = window.setTimeout(() => setToast(null), 3500);
     return () => window.clearTimeout(timer);
   }, [toast]);
 
@@ -100,6 +107,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return true;
   };
 
+  const updateProfile: AuthContextValue["updateProfile"] = (data) => {
+    setUser((prev) => (prev ? { ...prev, ...data } : prev));
+    notify("تغییرات با موفقیت ثبت شد");
+  };
+
   const logout = () => {
     setUser(null);
     notify("از حساب کاربری خارج شدید");
@@ -119,6 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     requestOtp,
     verifyOtp,
     loginWithPassword,
+    updateProfile,
     logout,
     toast,
     notify,
