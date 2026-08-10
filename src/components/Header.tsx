@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 import basket from "../assets/basketShopping.svg";
 import logo from "../assets/textLogo.png";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const { totalCount, openCart } = useCart();
+  const { isAuthenticated, openAuth } = useAuth();
 
   return (
     <motion.header
@@ -42,15 +45,33 @@ function Header() {
 
         {/* Actions — left side in RTL */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <div className="flex items-center gap-1.5 overflow-hidden sm:gap-2">
-            <button className="text-sm font-medium text-sand-500 transition-colors hover:bg-white/10 sm:px-2 sm:text-base">
-              ورود
-            </button>
-            <span className="h-4 w-px bg-cocoa-700" />
-            <button className="text-sm font-bold text-sand-500 transition-colors hover:bg-white/10 sm:px-2 sm:text-base">
-              ثبت‌نام
-            </button>
-          </div>
+          {isAuthenticated ? (
+            <Link
+              to="/profile"
+              aria-label="پروفایل کاربری"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand-50 text-sand-500 transition hover:bg-sand-100 sm:h-11 sm:w-11"
+            >
+              <User className="h-5 w-5" />
+            </Link>
+          ) : (
+            <div className="flex items-center gap-1.5 overflow-hidden sm:gap-1">
+              <button
+                type="button"
+                onClick={() => openAuth()}
+                className="text-sm font-medium text-sand-500 transition-colors hover:bg-white/10 sm:px-1 sm:text-base"
+              >
+                ورود
+              </button>
+              <span className="h-4 w-px bg-cocoa-700" />
+              <button
+                type="button"
+                onClick={() => openAuth()}
+                className="text-sm font-bold text-sand-500 transition-colors hover:bg-white/10 sm:px-1 sm:text-base"
+              >
+                ثبت‌نام
+              </button>
+            </div>
+          )}
 
           <button
             type="button"
