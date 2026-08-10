@@ -48,23 +48,15 @@ function Header() {
           {isAuthenticated ? (
             <ProfileMenu />
           ) : (
-            <div className="flex items-center gap-1.5 overflow-hidden sm:gap-1">
-              <button
-                type="button"
-                onClick={() => openAuth()}
-                className="text-sm font-medium text-sand-500 transition-colors hover:bg-white/10 sm:px-1 sm:text-base"
-              >
-                ورود
-              </button>
-              <span className="h-4 w-px bg-cocoa-700" />
-              <button
-                type="button"
-                onClick={() => openAuth()}
-                className="text-sm font-bold text-sand-500 transition-colors hover:bg-white/10 sm:px-1 sm:text-base"
-              >
-                ثبت‌نام
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => openAuth()}
+              className="flex items-center gap-1.5 rounded-full px-2 py-1.5 transition-colors hover:bg-sand-50/60 sm:gap-2 sm:px-3"
+            >
+              <span className="text-sm font-medium text-sand-500 sm:text-base">ورود</span>
+              <span className="h-4 w-px bg-cocoa-700/30" />
+              <span className="text-sm font-bold text-sand-500 sm:text-base">ثبت‌نام</span>
+            </button>
           )}
 
           <button
