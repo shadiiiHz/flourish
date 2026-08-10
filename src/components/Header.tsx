@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import basket from "../assets/basketShopping.svg";
-import logo from "../assets/logo.png";
+import logo from "../assets/textLogo.png";
 import { useCart } from "../context/CartContext";
 
 function Header() {
@@ -15,18 +15,18 @@ function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="sticky top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5"
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border border-white/40 bg-white/40 px-3 py-2.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_10px_30px_-12px_rgba(138,84,39,0.25)] backdrop-blur-2xl backdrop-saturate-150 sm:px-5 sm:py-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border border-white/40 bg-white/40 px-3 py-2.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.5),0_10px_30px_-12px_rgba(138,84,39,0.25)] backdrop-blur-2xl backdrop-saturate-150 sm:px-6 sm:py-3">
         {/* Logo + nav — right side in RTL */}
-        <div className="flex items-center gap-3 sm:gap-5">
+        <div className="flex items-center justify-center gap-3 sm:gap-5">
           <Link
             to="/"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="shrink-0 flex items-center justify-center overflow-hidden rounded-full ring-1 ring-sand-100 outline-none focus-visible:ring-2 focus-visible:ring-sand-300 sm:h-14 sm:w-14"
+            className="flex h-10 w-10 shrink-0 items-center justify-center self-center overflow-hidden sm:h-14 sm:w-14"
           >
             <img
               src={logo}
               alt="لوگوی فلوریش"
-              className="h-10 w-10 object-cover"
+              className="h-full w-full object-contain object-center"
             />
           </Link>
 
