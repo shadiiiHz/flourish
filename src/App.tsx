@@ -10,6 +10,7 @@ import AuthModal from './components/AuthModal'
 import AuthToast from './components/AuthToast'
 import { CartProvider, useCart } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
+import { AddressProvider } from './context/AddressContext'
 import Home from './pages/Home'
 import CategoryMenuPage from './pages/CategoryMenuPage'
 import ProfilePage from './pages/ProfilePage'
@@ -27,37 +28,39 @@ function CartOverlay() {
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <div className="relative min-h-svh overflow-x-clip bg-cream text-cocoa-900">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none fixed inset-0 z-0 opacity-[0.03]"
-              style={{
-                backgroundImage: `url(${logo})`,
-                backgroundRepeat: 'repeat',
-                backgroundSize: '100px 100px',
-              }}
-            />
+      <AddressProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <div className="relative min-h-svh overflow-x-clip bg-cream text-cocoa-900">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none fixed inset-0 z-0 opacity-[0.03]"
+                style={{
+                  backgroundImage: `url(${logo})`,
+                  backgroundRepeat: 'repeat',
+                  backgroundSize: '100px 100px',
+                }}
+              />
 
-            <div className="relative z-10">
-              <Header />
-              <main>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/menu" element={<CategoryMenuPage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                </Routes>
-              </main>
-              <Footer />
+              <div className="relative z-10">
+                <Header />
+                <main>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/menu" element={<CategoryMenuPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+              <GoToTop />
+              <CartOverlay />
+              <AuthModal />
+              <AuthToast />
             </div>
-            <GoToTop />
-            <CartOverlay />
-            <AuthModal />
-            <AuthToast />
-          </div>
-        </BrowserRouter>
-      </CartProvider>
+          </BrowserRouter>
+        </CartProvider>
+      </AddressProvider>
     </AuthProvider>
   )
 }

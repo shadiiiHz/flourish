@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { normalizeDigits, PHONE_REGEX, toPersianDigits } from "../utils/phone";
+import AddressesPanel from "../components/AddressesPanel";
 
 type ProfileTab =
   | "info"
@@ -353,7 +354,7 @@ function ProfilePage() {
         <div>
           {activeTab === "info" && <ProfileInfoPanel />}
           {activeTab === "orders" && <PlaceholderPanel label="سفارش‌های من" />}
-          {activeTab === "addresses" && <PlaceholderPanel label="آدرس‌های من" />}
+          {activeTab === "addresses" && <AddressesPanel />}
           {activeTab === "transactions" && <PlaceholderPanel label="تراکنش‌ها" />}
           {activeTab === "password" && <PlaceholderPanel label="تغییر کلمه عبور" />}
           {activeTab === "notifications" && <PlaceholderPanel label="تنظیمات اعلان" />}

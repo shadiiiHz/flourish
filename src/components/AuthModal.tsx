@@ -56,6 +56,7 @@ function AuthModal() {
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const [error, setError] = useState<string | null>(null);
+  const [errorField, setErrorField] = useState<"phone" | "password" | "both" | "otp" | null>(null);
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(RESEND_SECONDS);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -71,6 +72,7 @@ function AuthModal() {
       setShowPassword(false);
       setOtp(Array(OTP_LENGTH).fill(""));
       setError(null);
+      setErrorField(null);
       setLoading(false);
     }
   }
@@ -107,9 +109,11 @@ function AuthModal() {
     const cleanPhone = normalizeDigits(phone);
     if (!PHONE_REGEX.test(cleanPhone)) {
       setError("شماره موبایل را به‌درستی وارد کنید");
+      setErrorField("phone");
       return;
     }
     setError(null);
+    setErrorField(null);
     setLoading(true);
     setPhone(cleanPhone);
     await requestOtp(cleanPhone);
@@ -122,6 +126,7 @@ function AuthModal() {
     if (timer > 0 || loading) return;
     setLoading(true);
     setError(null);
+    setErrorField(null);
     await requestOtp(phone);
     setLoading(false);
     setOtp(Array(OTP_LENGTH).fill(""));
@@ -151,11 +156,13 @@ function AuthModal() {
     const code = otp.join("");
     if (code.length !== OTP_LENGTH || loading) return;
     setError(null);
+    setErrorField(null);
     setLoading(true);
     const ok = await verifyOtp(phone, code);
     setLoading(false);
     if (!ok) {
       setError("کد وارد شده صحیح نیست");
+      setErrorField("otp");
       setOtp(Array(OTP_LENGTH).fill(""));
       otpRefs.current[0]?.focus();
     }
@@ -172,17 +179,23 @@ function AuthModal() {
     const cleanPhone = normalizeDigits(phone);
     if (!PHONE_REGEX.test(cleanPhone)) {
       setError("شماره موبایل را به‌درستی وارد کنید");
+      setErrorField("phone");
       return;
     }
     if (!password) {
       setError("کلمه عبور را وارد کنید");
+      setErrorField("password");
       return;
     }
     setError(null);
+    setErrorField(null);
     setLoading(true);
     const ok = await loginWithPassword(cleanPhone, password);
     setLoading(false);
-    if (!ok) setError("شماره موبایل یا کلمه عبور اشتباه است");
+    if (!ok) {
+      setError("شماره موبایل یا کلمه عبور اشتباه است");
+      setErrorField("both");
+    }
   };
 
   return createPortal(
@@ -238,19 +251,25 @@ function AuthModal() {
               transition={{ duration: 0.2 }}
               className="mt-5 flex flex-col gap-4"
             >
-              <FieldShell label="ورود شماره موبایل">
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  dir="ltr"
-                  placeholder="09xxxxxxxxx"
-                  value={toPersianDigits(phone)}
-                  onChange={(e) => setPhone(normalizeDigits(e.target.value))}
-                  onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
-                  className="w-full rounded-2xl border border-cocoa-900/10 bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 focus:border-sand-400"
-                />
-              </FieldShell>
-              {error && <p className="-mt-2 text-xs font-semibold text-danger-500">{error}</p>}
+              <div className="flex flex-col gap-1.5">
+                <FieldShell label="ورود شماره موبایل">
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    dir="ltr"
+                    placeholder="09xxxxxxxxx"
+                    value={toPersianDigits(phone)}
+                    onChange={(e) => setPhone(normalizeDigits(e.target.value))}
+                    onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
+                    className={`w-full rounded-2xl border bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 ${
+                      errorField === "phone" ? "border-danger-500" : "border-cocoa-900/10 focus:border-sand-400"
+                    }`}
+                  />
+                </FieldShell>
+                {errorField === "phone" && error && (
+                  <p className="text-xs font-semibold text-danger-500">{error}</p>
+                )}
+              </div>
 
               <button
                 type="button"
@@ -266,6 +285,7 @@ function AuthModal() {
                 type="button"
                 onClick={() => {
                   setError(null);
+                  setErrorField(null);
                   setAuthView("password");
                 }}
                 className="mx-auto flex items-center gap-1.5 text-sm font-bold text-sand-500 transition hover:text-sand-400"
@@ -285,37 +305,56 @@ function AuthModal() {
               transition={{ duration: 0.2 }}
               className="mt-5 flex flex-col gap-4"
             >
-              <FieldShell label="شماره موبایل">
-                <input
-                  type="tel"
-                  inputMode="numeric"
-                  dir="ltr"
-                  placeholder="09xxxxxxxxx"
-                  value={toPersianDigits(phone)}
-                  onChange={(e) => setPhone(normalizeDigits(e.target.value))}
-                  className="w-full rounded-2xl border border-cocoa-900/10 bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 focus:border-sand-400"
-                />
-              </FieldShell>
-
-              <div className="relative flex items-center rounded-2xl border border-cocoa-900/10 bg-white transition focus-within:border-sand-400 focus-within:ring-2 focus-within:ring-sand-400/25">
-                <button
-                  type="button"
-                  aria-label={showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="px-3 text-cocoa-500"
-                >
-                  {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
-                </button>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="کلمه عبور"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handlePasswordLogin()}
-                  className="w-full bg-transparent py-3.5 pl-2 pr-1 text-right text-base text-cocoa-900 outline-none placeholder:text-cocoa-500/40"
-                />
+              <div className="flex flex-col gap-1.5">
+                <FieldShell label="شماره موبایل">
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    dir="ltr"
+                    placeholder="09xxxxxxxxx"
+                    value={toPersianDigits(phone)}
+                    onChange={(e) => setPhone(normalizeDigits(e.target.value))}
+                    className={`w-full rounded-2xl border bg-white px-4 py-3.5 text-right text-base text-cocoa-900 outline-none transition focus:ring-2 focus:ring-sand-400/25 placeholder:text-cocoa-500/40 ${
+                      errorField === "phone" || errorField === "both"
+                        ? "border-danger-500"
+                        : "border-cocoa-900/10 focus:border-sand-400"
+                    }`}
+                  />
+                </FieldShell>
+                {errorField === "phone" && error && (
+                  <p className="text-xs font-semibold text-danger-500">{error}</p>
+                )}
               </div>
-              {error && <p className="-mt-2 text-xs font-semibold text-danger-500">{error}</p>}
+
+              <div className="flex flex-col gap-1.5">
+                <div
+                  className={`relative flex items-center rounded-2xl border bg-white transition focus-within:ring-2 focus-within:ring-sand-400/25 ${
+                    errorField === "password" || errorField === "both"
+                      ? "border-danger-500"
+                      : "border-cocoa-900/10 focus-within:border-sand-400"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    aria-label={showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}
+                    onClick={() => setShowPassword((v) => !v)}
+                    className="px-3 text-cocoa-500"
+                  >
+                    {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                  </button>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="کلمه عبور"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handlePasswordLogin()}
+                    className="w-full bg-transparent py-3.5 pl-2 pr-1 text-right text-base text-cocoa-900 outline-none placeholder:text-cocoa-500/40"
+                  />
+                </div>
+                {(errorField === "password" || errorField === "both") && error && (
+                  <p className="text-xs font-semibold text-danger-500">{error}</p>
+                )}
+              </div>
 
               <button
                 type="button"
@@ -331,6 +370,7 @@ function AuthModal() {
                 type="button"
                 onClick={() => {
                   setError(null);
+                  setErrorField(null);
                   setAuthView("otp-phone");
                 }}
                 className="mx-auto flex items-center gap-1.5 text-sm font-bold text-sand-500 transition hover:text-sand-400"
@@ -362,6 +402,7 @@ function AuthModal() {
                   type="button"
                   onClick={() => {
                     setError(null);
+                    setErrorField(null);
                     setAuthView("otp-phone");
                   }}
                   className="flex items-center gap-1.5 font-bold text-sand-500 transition hover:text-sand-400"
@@ -384,7 +425,9 @@ function AuthModal() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                    className="h-11 w-10 rounded-2xl border border-cocoa-900/10 bg-sand-50/60 text-center text-lg font-bold text-cocoa-900 outline-none transition focus:border-sand-400 focus:bg-white focus:ring-2 focus:ring-sand-400/25 sm:h-12 sm:w-11"
+                    className={`h-11 w-10 rounded-2xl border bg-sand-50/60 text-center text-lg font-bold text-cocoa-900 outline-none transition focus:bg-white focus:ring-2 focus:ring-sand-400/25 sm:h-12 sm:w-11 ${
+                      errorField === "otp" ? "border-danger-500" : "border-cocoa-900/10 focus:border-sand-400"
+                    }`}
                   />
                 ))}
               </div>
@@ -431,6 +474,7 @@ function AuthModal() {
                 type="button"
                 onClick={() => {
                   setError(null);
+                  setErrorField(null);
                   setAuthView("password");
                 }}
                 className="mx-auto flex items-center gap-1.5 text-sm font-bold text-sand-500 transition hover:text-sand-400"
