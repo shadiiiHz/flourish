@@ -28,6 +28,8 @@ interface AuthContextValue {
   requestOtp: (phone: string) => Promise<void>;
   verifyOtp: (phone: string, code: string) => Promise<boolean>;
   loginWithPassword: (phone: string, password: string) => Promise<boolean>;
+  requestPasswordChange: (newPassword: string) => Promise<void>;
+  confirmPasswordChange: (code: string) => Promise<boolean>;
   updateProfile: (
     data: Partial<Pick<AuthUser, "firstName" | "lastName" | "email" | "avatar" | "phone">>,
   ) => void;
@@ -56,6 +58,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authView, setAuthView] = useState<AuthView>("otp-phone");
   const [pendingOtp, setPendingOtp] = useState<{ phone: string; code: string } | null>(null);
+  const [pendingPasswordChange, setPendingPasswordChange] = useState<{
+    password: string;
+    code: string;
+  } | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -107,6 +113,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return true;
   };
 
+  // مشابه requestOtp، کد تایید تغییر رمز عبور به‌صورت شبیه‌سازی‌شده ساخته می‌شود.
+  const requestPasswordChange = async (newPassword: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const code = String(Math.floor(10000 + Math.random() * 90000));
+    console.info(`[Flourish] کد تایید شبیه‌سازی‌شده برای تغییر رمز عبور: ${code}`);
+    setPendingPasswordChange({ password: newPassword, code });
+    notify(`کد یکبار مصرف شبیه‌سازی‌شده: ${code}`);
+  };
+
+  const confirmPasswordChange = async (code: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    if (!pendingPasswordChange || pendingPasswordChange.code !== code) {
+      return false;
+    }
+    setUser((prev) => (prev ? { ...prev, hasPassword: true } : prev));
+    setPendingPasswordChange(null);
+    notify("کلمه عبور با موفقیت تغییر کرد");
+    return true;
+  };
+
   const updateProfile: AuthContextValue["updateProfile"] = (data) => {
     setUser((prev) => (prev ? { ...prev, ...data } : prev));
     notify("تغییرات با موفقیت ثبت شد");
@@ -131,6 +157,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     requestOtp,
     verifyOtp,
     loginWithPassword,
+    requestPasswordChange,
+    confirmPasswordChange,
     updateProfile,
     logout,
     toast,

@@ -7,7 +7,6 @@ import {
   Lock,
   MessageSquareText,
   Pencil,
-  Phone,
   X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
@@ -442,14 +441,6 @@ function AuthModal() {
               </div>
 
               <div className="flex w-full items-center gap-3">
-                <button
-                  type="button"
-                  disabled={timer > 0 || loading}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-cocoa-900/10 px-3 py-2 text-xs font-bold text-cocoa-700 transition hover:bg-sand-50 disabled:opacity-40"
-                >
-                  <Phone className="h-3.5 w-3.5" />
-                  درخواست تماس
-                </button>
                 <button
                   type="button"
                   onClick={handleResend}
