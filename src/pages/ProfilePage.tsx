@@ -308,6 +308,10 @@ function ProfilePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
   const requestedTab = searchParams.get("tab");
   const activeTab: ProfileTab = TABS.some((t) => t.id === requestedTab)
     ? (requestedTab as ProfileTab)
