@@ -24,6 +24,8 @@ interface CartContextValue {
   lines: CartLine[];
   totalCount: number;
   totalPrice: number;
+  taxAmount: number;
+  grandTotal: number;
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
@@ -40,6 +42,7 @@ interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "flourish-cart";
+const TAX_RATE = 0.1;
 
 const lineKeyFor = (itemId: string, variantId?: string) =>
   variantId ? `${itemId}:${variantId}` : itemId;
@@ -146,11 +149,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => lines.reduce((sum, line) => sum + line.quantity * line.price, 0),
     [lines],
   );
+  const taxAmount = useMemo(() => Math.round(totalPrice * TAX_RATE), [totalPrice]);
+  const grandTotal = useMemo(() => totalPrice + taxAmount, [totalPrice, taxAmount]);
 
   const value: CartContextValue = {
     lines,
     totalCount,
     totalPrice,
+    taxAmount,
+    grandTotal,
     isOpen,
     openCart: () => setIsOpen(true),
     closeCart: () => setIsOpen(false),

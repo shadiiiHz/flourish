@@ -13,6 +13,8 @@ const firstCategoryId =
 function buildWhatsappMessage(
   lines: { title: string; variantTitle?: string; price: number; quantity: number }[],
   totalPrice: number,
+  taxAmount: number,
+  grandTotal: number,
 ) {
   const header = "سلام، می‌خواهم سفارش زیر را ثبت کنم:";
   const rows = lines.map((line) => {
@@ -20,12 +22,17 @@ function buildWhatsappMessage(
     const lineTotal = (line.price * line.quantity).toLocaleString("fa-IR");
     return `• ${name} × ${line.quantity.toLocaleString("fa-IR")} = ${lineTotal} تومان`;
   });
-  const footer = `جمع کل: ${totalPrice.toLocaleString("fa-IR")} تومان`;
+  const footer = [
+    `جمع کل: ${totalPrice.toLocaleString("fa-IR")} تومان`,
+    `مالیات (۱۰٪): ${taxAmount.toLocaleString("fa-IR")} تومان`,
+    `پرداختی: ${grandTotal.toLocaleString("fa-IR")} تومان`,
+  ].join("\n");
   return [header, "", ...rows, "", footer].join("\n");
 }
 
 function CartDrawer() {
-  const { lines, totalCount, totalPrice, closeCart, setQuantity, removeLine } = useCart();
+  const { lines, totalCount, totalPrice, taxAmount, grandTotal, closeCart, setQuantity, removeLine } =
+    useCart();
   const navigate = useNavigate();
 
   const goToMenu = () => {
@@ -53,7 +60,7 @@ function CartDrawer() {
   const whatsappHref =
     lines.length > 0
       ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-          buildWhatsappMessage(lines, totalPrice),
+          buildWhatsappMessage(lines, totalPrice, taxAmount, grandTotal),
         )}`
       : undefined;
 
@@ -174,11 +181,25 @@ function CartDrawer() {
             </div>
 
             <div className="flex flex-col gap-3 border-t border-sand-50 p-5 sm:p-6">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-cocoa-600">جمع کل ({totalCount.toLocaleString("fa-IR")} کالا)</span>
-                <span className="text-lg font-bold text-cocoa-900">
-                  {totalPrice.toLocaleString("fa-IR")} تومان
-                </span>
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-cocoa-600">جمع کل ({totalCount.toLocaleString("fa-IR")} کالا)</span>
+                  <span className="font-semibold text-cocoa-900">
+                    {totalPrice.toLocaleString("fa-IR")} تومان
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-cocoa-600">مالیات (۱۰٪)</span>
+                  <span className="font-semibold text-cocoa-900">
+                    {taxAmount.toLocaleString("fa-IR")} تومان
+                  </span>
+                </div>
+                <div className="flex items-center justify-between border-t border-sand-50 pt-1.5 text-sm">
+                  <span className="font-bold text-cocoa-700">پرداختی</span>
+                  <span className="text-lg font-bold text-cocoa-900">
+                    {grandTotal.toLocaleString("fa-IR")} تومان
+                  </span>
+                </div>
               </div>
               <a
                 href={whatsappHref}
